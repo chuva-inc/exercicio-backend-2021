@@ -1,0 +1,45 @@
+version: "2"
+
+services:
+  exercicioschuva:
+    container_name: exercicioschuva
+    image: wodby/drupal-php:7.4
+    depends_on:
+      - exercicioschuva_mariadb
+    external_links:
+      - exercicioschuva_mariadb
+    environment:
+      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
+      DB_HOST: mariadb
+      DB_USER: eventmanager
+      DB_PASSWORD: eventmanager
+      DB_NAME: exercicioschuva
+      DB_DRIVER: mysql
+      PHP_XDEBUG: 1
+    volumes:
+        - ./:/var/www/html:delegated
+
+  exercicioschuva_nginx:
+    image: wodby/nginx:1.20-5.14.0
+    depends_on:
+      - exercicioschuva
+    ports:
+      - "8000:80"
+    environment:
+      NGINX_VHOST_PRESET: drupal9
+      NGINX_STATIC_CONTENT_OPEN_FILE_CACHE: "off"
+      NGINX_ERROR_LOG_LEVEL: debug
+      NGINX_BACKEND_HOST: exercicioschuva
+      NGINX_SERVER_ROOT: /var/www/html/web
+    volumes:
+        - ./:/var/www/html:delegated
+
+  exercicioschuva_mariadb:
+    container_name: exercicioschuva_mariadb
+    image: wodby/mariadb:10.1-2.1.0
+    environment:
+      MYSQL_ROOT_PASSWORD: toorroot
+      MYSQL_INNODB_LOG_FILE_SIZE: 256M
+    volumes:
+      - ./galoa-db:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+      - ./galoa-db-data:/var/lib/mysql # I want to manage volumes manually.

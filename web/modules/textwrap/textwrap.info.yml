@@ -1,0 +1,6 @@
+name: Textwrap
+description: Exercício de PHP
+package: Chuva Inc.
+
+type: module
+core: 9.x
