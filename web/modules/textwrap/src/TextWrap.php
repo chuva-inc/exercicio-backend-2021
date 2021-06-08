@@ -19,7 +19,7 @@ class TextWrap implements TextWrapInterface {
   /**
    * {@inheritdoc}
    */
-  public function textWrap(string $text, int $length): array {
+  public function wrap(string $text, int $length): array {
     // Apague o código abaixo e escreva sua própria implementação,
     // nós colocamos esse mock para poder rodar a análise de cobertura dos
     // testes unitários.
