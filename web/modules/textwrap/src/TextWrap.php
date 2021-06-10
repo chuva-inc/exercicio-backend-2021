@@ -32,6 +32,39 @@ class TextWrap implements TextWrapInterface {
           
       endif;
   }
-  
+
+
+
+
+
+  $k = 0;
+  $posicao = 0;
+  $count = 0;
+  $quebra[0] = '';
+  $n = 0;
+
+  foreach($arr as $word){
+      $n++;
+
+      $tamanho = mb_strlen($word, 'utf-8');
+      
+      $quebra = preg_split('/(.{'.$length.'})/u', $word,  -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
+      
+      
+      if($tamanho <= $length):
+          $words[$posicao] = $word;
+          $posicao++;
+      else:
+          for($i = 0; $i < count($quebra); $i++){
+          
+              $words[$posicao] = $quebra[$i];
+              $posicao++;
+          
+          }
+      endif;
+
+    }
+
+
 
 }
