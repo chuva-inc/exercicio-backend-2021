@@ -77,5 +77,20 @@ class TextWrapTest extends TestCase {
     $this->assertEquals("a", $ret[9]);
     $this->assertCount(10, $ret);
   }
-  
+
+  /**
+   * Testa a quebra de linha em palavras com caracteres multibytes (acentos, cedilha, entre outros)
+   */
+  public function testForAccent(){
+    $ret = $this->resolucao->wrap($this->accentString, 3);
+    $this->assertEquals("Não", $ret[0]);
+    $this->assertEquals("Não", $ret[1]);
+    $this->assertEquals("amé", $ret[2]);
+    $this->assertEquals("m",   $ret[3]);
+    $this->assertEquals("aça", $ret[4]);
+    $this->assertEquals("í",   $ret[5]);
+    $this->assertCount(6, $ret);
+
+  }
+
 }
