@@ -93,4 +93,23 @@ class TextWrapTest extends TestCase {
 
   }
 
+
+   /**
+   * Testa a quebra de linha quando existe mais de um espaço em branco entre as palavras.
+   */
+  public function testForSpace() {
+    $ret = $this->resolucao->wrap($this->baseStringSpace, 8);
+    $this->assertEquals("Se vi", $ret[0]);
+    $this->assertEquals("mais", $ret[1]);
+    $this->assertEquals("longe", $ret[2]);
+    $this->assertEquals("foi por", $ret[3]);
+    $this->assertEquals("estar de", $ret[4]);
+    $this->assertEquals("pé sobre", $ret[5]);
+    $this->assertEquals("ombros", $ret[6]);
+    $this->assertEquals("de", $ret[7]);
+    $this->assertEquals("gigantes", $ret[8]);
+    $this->assertCount(9, $ret);
+  }
+
+
 }
