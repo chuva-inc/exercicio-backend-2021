@@ -113,4 +113,10 @@ class TextWrapTest extends TestCase {
     $this->assertCount(9, $ret);
   }
 
+  public function testForBiggerThanPhrase() {
+    $ret = $this->resolucao->wrap($this->baseString, 100);
+    $this->assertEquals("Se vi mais longe foi por estar de pé sobre ombros de gigantes", $ret[0]);
+    $this->assertCount(1, $ret);
+  }
+
 }
