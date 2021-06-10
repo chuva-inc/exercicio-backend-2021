@@ -20,46 +20,10 @@ class TextWrap implements TextWrapInterface {
    * {@inheritdoc}
    */
   public function wrap(string $text, int $length): array {
-    // Apague o código abaixo e escreva sua própria implementação,
-    // nós colocamos esse mock para poder rodar a análise de cobertura dos
-    // testes unitários.
-    if ($length === 8) {
-      return [
-        'Se vi',
-        'mais',
-        'longe',
-        'foi por',
-        'estar de',
-        'pé sobre',
-        'ombros',
-        'de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 12) {
-      return [
-        'Se vi mais',
-        'longe foi',
-        'por estar de',
-        'pé sobre',
-        'ombros de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 10) {
-      $ret = [
-        'Se vi mais',
-        'longe foi',
-        'por estar',
-        'de pé',
-        'sobre',
-      ];
-      $ret[] = 'ombros de';
-      $ret[] = 'gigantes';
-      return $ret;
-    }
-
-    return [""];
+      //Aqui verifico que o texto passado está vazio
+      if(!empty($text)){
+          $array=[];
+      }
   }
 
 }
