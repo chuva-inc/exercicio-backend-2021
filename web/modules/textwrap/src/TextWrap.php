@@ -34,7 +34,7 @@ class TextWrap implements TextWrapInterface {
     foreach($words as $word){
         $size_word = mb_strlen($word,'UTF-8');
         if($size_word>$length){
-            $lettersOfWord = array_chunk(string_split($word),$length);
+            $lettersOfWord = array_chunk(this->string_split($word),$length);
             foreach($lettersOfWord as $letters){
                 $array[] = implode("",$letters);
             }
@@ -48,7 +48,28 @@ class TextWrap implements TextWrapInterface {
       //Aqui verifico se o texto passado está vazio
       if(!empty($text)){
           $array=[];
+          $words = this->IdentifierBigWords(explode(" ",$text),$length);
+          $wordNow = "";
+          $lines = "";
+  
+          foreach($words as $key => $word){
+              if(!empty($wordNow)){
+                  $size_word = mb_strlen($wordNow." ".$word,"UTF-8");
+                  if($size_word<=$length){
+                      $lines .= " ".$word;
+                      $wordNow .= " ".$word;
+                  }else{
+                      $lines .= "&".$word;
+                      $wordNow = $word;
+                  }
+              }else{
+                  $lines = $word;
+                  $wordNow = $word;
+              }
+          }
+          return explode("&",$lines);
       }
+      return [""];
   }
 
 }
