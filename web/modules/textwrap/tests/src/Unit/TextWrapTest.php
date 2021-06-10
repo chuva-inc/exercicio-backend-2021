@@ -60,4 +60,22 @@ class TextWrapTest extends TestCase {
     $this->assertCount(6, $ret);
   }
 
+  /**
+   * Testa a quebra de linha para 1 caracter por linha.
+   */
+  public function testForOneCaracter() {
+    $ret = $this->resolucao->wrap($this->otherString, 1);
+    $this->assertEquals("A", $ret[0]);
+    $this->assertEquals("v", $ret[1]);
+    $this->assertEquals("i", $ret[2]);
+    $this->assertEquals("d", $ret[3]);
+    $this->assertEquals("a", $ret[4]);
+    $this->assertEquals("é", $ret[5]);
+    $this->assertEquals("b", $ret[6]);
+    $this->assertEquals("e", $ret[7]);
+    $this->assertEquals("l", $ret[8]);
+    $this->assertEquals("a", $ret[9]);
+    $this->assertCount(10, $ret);
+  }
+  
 }
