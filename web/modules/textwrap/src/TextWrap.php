@@ -19,6 +19,12 @@ class TextWrap implements TextWrapInterface {
   /**
    * {@inheritdoc}
    */
+  private function string_split_unicode(){
+
+  }
+  private function IdentifierBigWords(array $words,int $length){
+    
+  }
   public function wrap(string $text, int $length): array {
       //Aqui verifico que o texto passado está vazio
       if(!empty($text)){
