@@ -18,6 +18,9 @@ class TextWrapTest extends TestCase {
   public function setUp(): void  {
     $this->resolucao = new TextWrap();
     $this->baseString = "Se vi mais longe foi por estar de pé sobre ombros de gigantes";
+    $this->otherString = "A vida é bela";
+    $this->accentString = "Não Não amém açaí";
+    $this->baseStringSpace = "Se  vi      mais longe   foi por   estar de pé    sobre  ombros de            gigantes";
   }
 
   /**
@@ -93,10 +96,9 @@ class TextWrapTest extends TestCase {
 
   }
 
-
-   /**
-   * Testa a quebra de linha quando existe mais de um espaço em branco entre as palavras.
-   */
+  /**
+  * Testa a quebra de linha quando existe mais de um espaço em branco entre as palavras.
+  */
   public function testForSpace() {
     $ret = $this->resolucao->wrap($this->baseStringSpace, 8);
     $this->assertEquals("Se vi", $ret[0]);
@@ -110,6 +112,5 @@ class TextWrapTest extends TestCase {
     $this->assertEquals("gigantes", $ret[8]);
     $this->assertCount(9, $ret);
   }
-
 
 }
