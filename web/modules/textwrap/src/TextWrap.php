@@ -16,50 +16,22 @@ namespace Drupal\textwrap;
  */
 class TextWrap implements TextWrapInterface {
 
-  /**
-   * {@inheritdoc}
-   */
-  public function wrap(string $text, int $length): array {
-    // Apague o código abaixo e escreva sua própria implementação,
-    // nós colocamos esse mock para poder rodar a análise de cobertura dos
-    // testes unitários.
-    if ($length === 8) {
-      return [
-        'Se vi',
-        'mais',
-        'longe',
-        'foi por',
-        'estar de',
-        'pé sobre',
-        'ombros',
-        'de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 12) {
-      return [
-        'Se vi mais',
-        'longe foi',
-        'por estar de',
-        'pé sobre',
-        'ombros de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 10) {
-      $ret = [
-        'Se vi mais',
-        'longe foi',
-        'por estar',
-        'de pé',
-        'sobre',
-      ];
-      $ret[] = 'ombros de';
-      $ret[] = 'gigantes';
-      return $ret;
-    }
-
-    return [""];
+  $j = 0;
+  $arr[0] = '';
+  for($i = 0; $i < strlen($text); $i++){
+          
+      if(!(strcmp($text[$i], ' ') == 0)):
+          $arr[$j] = $arr[$j] . $text[$i];          
+      else:   
+          while(strcmp($text[$i], ' ') == 0){  
+            $i++;
+          }
+          $i--;
+          $j++;
+          $arr[$j] = '';
+          
+      endif;
   }
+  
 
 }
