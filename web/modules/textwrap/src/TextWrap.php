@@ -30,7 +30,19 @@ class TextWrap implements TextWrapInterface {
     }
   }
   private function IdentifierBigWords(array $words,int $length):array{
-    
+    $array = [];
+    foreach($words as $word){
+        $size_word = mb_strlen($word,'UTF-8');
+        if($size_word>$length){
+            $lettersOfWord = array_chunk(string_split($word),$length);
+            foreach($lettersOfWord as $letters){
+                $array[] = implode("",$letters);
+            }
+        }else{
+            $array[] = $word;
+        }
+    }
+    return $array;
   }
   public function wrap(string $text, int $length): array {
       //Aqui verifico se o texto passado está vazio
