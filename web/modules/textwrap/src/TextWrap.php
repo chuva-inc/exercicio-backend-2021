@@ -34,9 +34,6 @@ class TextWrap implements TextWrapInterface {
   }
 
 
-
-
-
   $k = 0;
   $posicao = 0;
   $count = 0;
@@ -64,6 +61,37 @@ class TextWrap implements TextWrapInterface {
       endif;
 
     }
+
+
+    $arr = $words;
+
+    $j = 0;
+    $pos = 0;
+    
+    $arr2[0] = '';
+
+    for($i = 0; $i < count($arr); $i++){
+
+      if(strcmp($arr2[$j], '') == 0):
+              
+        $arr2[$j] = $arr[$i];
+                
+      else:
+               
+        if(mb_strlen($arr2[$j], 'utf8') + mb_strlen($arr[$i], 'utf8') + 1 <= $length):
+
+          $arr2[$j] =  $arr2[$j] . ' ' .  $arr[$i];
+             
+        else:
+          $i--;
+          $j++;
+          $arr2[$j] = '';
+              
+        endif;
+      endif;      
+    }
+    return $arr2;
+  }
 
 
 
