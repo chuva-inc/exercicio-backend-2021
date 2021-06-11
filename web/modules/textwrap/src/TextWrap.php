@@ -20,10 +20,25 @@ class TextWrap implements TextWrapInterface {
    * {@inheritdoc}
    */
   public function wrap(string $text, int $length): array {
-      //Aqui verifico se o texto passado está vazio
       if(!empty($text)){
-        $array=[];
+        $array = [];
         $words = [];
+        foreach(explode(" ",$text) as $word){
+            $size_word = mb_strlen($word,'UTF-8');
+            if($size_word>$length){
+                $split_word = array();
+                $size = mb_strlen($word, "UTF-8");
+                for ($i = 0; $i < $size; $i += $l) {
+                    $split_word[] = mb_substr($str, $i, $l, "UTF-8");
+                }
+                $lettersOfWord = array_chunk($split_word,$length);
+                foreach($lettersOfWord as $letters){
+                    $words[] = implode("",$letters);
+                }
+            }else{
+                $words[] = $word;
+            }
+        }
         $wordNow = "";
         $lines = "";
 
