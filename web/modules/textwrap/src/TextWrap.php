@@ -19,36 +19,55 @@ class TextWrap implements TextWrapInterface {
   /**
    * {@inheritdoc}
    */
-  private function string_split(string $str):array{
-    if (!empty($str)) {
-        $newArray = array();
-        $size = mb_strlen($str, "UTF-8");
-        for ($i = 0; $i < $size; $i += $l) {
-            $newArray[] = mb_substr($str, $i, $l, "UTF-8");
-        }
-        return $newArray;
-    }
-  }
-  private function IdentifierBigWords(array $words,int $length):array{
-    $array = [];
-    foreach($words as $word){
-        $size_word = mb_strlen($word,'UTF-8');
-        if($size_word>$length){
-            $lettersOfWord = array_chunk(this->string_split($word),$length);
-            foreach($lettersOfWord as $letters){
-                $array[] = implode("",$letters);
-            }
-        }else{
-            $array[] = $word;
-        }
-    }
-    return $array;
-  }
+//   public function string_split(string $str):array{
+//     if (!empty($str)) {
+//         $newArray = array();
+//         $size = mb_strlen($str, "UTF-8");
+//         for ($i = 0; $i < $size; $i += $l) {
+//             $newArray[] = mb_substr($str, $i, $l, "UTF-8");
+//         }
+//         return $newArray;
+//     }
+//   }
+//   public function IdentifierBigWords(array $words,int $length):array{
+//     $array = [];
+//     foreach($words as $word){
+//         $size_word = mb_strlen($word,'UTF-8');
+//         if($size_word>$length){
+//             $split_word = this->string_split($word);
+//             $lettersOfWord = array_chunk($split_word,$length);
+//             foreach($lettersOfWord as $letters){
+//                 $array[] = implode("",$letters);
+//             }
+//         }else{
+//             $array[] = $word;
+//         }
+//     }
+//     return $array;
+//   }
   public function wrap(string $text, int $length): array {
       //Aqui verifico se o texto passado está vazio
       if(!empty($text)){
           $array=[];
-          $words = this->IdentifierBigWords(explode(" ",$text),$length);
+          $words = [];
+          foreach(explode(" ",$text) as $word){
+                $size_word = mb_strlen($word,'UTF-8');
+                if($size_word>$length){
+                    // $split_word = this->string_split($word);
+                    $split_word = [];
+                    $size = mb_strlen($word, "UTF-8");
+                    for ($i = 0; $i < $size; $i += $l) {
+                        $split_word[] = mb_substr($str, $i, $l, "UTF-8");
+                    }
+                    $lettersOfWord = array_chunk($split_word,$length);
+                    foreach($lettersOfWord as $letters){
+                        $array[] = implode("",$letters);
+                    }
+                }else{
+                    $array[] = $word;
+                }
+            }
+        //   $words = this->IdentifierBigWords(explode(" ",$text),$length);
           $wordNow = "";
           $lines = "";
   

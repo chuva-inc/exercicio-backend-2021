@@ -24,6 +24,7 @@ class TextWrapTest extends TestCase {
    * Checa o retorno para strings vazias.
    */
   public function testForEmptyStrings() {
+    echo phpversion();
     $ret = $this->resolucao->wrap("", 2021);
     $this->assertEmpty($ret[0]);
     $this->assertCount(1, $ret);
