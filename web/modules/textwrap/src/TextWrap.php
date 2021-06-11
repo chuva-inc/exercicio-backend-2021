@@ -19,6 +19,17 @@ class TextWrap implements TextWrapInterface {
   /**
    * {@inheritdoc}
    */
+
+  /**
+   * @param string $text
+   *  A string a ser dividida
+   * @param int $length
+   *  Referente a quantos pedaços dividir da string
+   * @return array
+   *  Retorna um array dos pedaços da string informada
+   *  
+   */
+  
   private function split_string_long_word(string $text,int $length):array{
     $split_word = preg_split('~~u', $text, -1, PREG_SPLIT_NO_EMPTY);
 
@@ -28,10 +39,20 @@ class TextWrap implements TextWrapInterface {
     }
     return $chunks;
   }
+
+  /**
+   * @param array $words
+   *  O array de palavras que será usado
+   * @param int $length
+   *  Em quantos caracteres deve-se quebrar as palavras
+   * @return array
+   *  Retorna um array de palavras, contudo já retornando
+   *  A quebra de palavras maiores que os limites estabelecidos por linha
+   */
+
   private function IdentifierBigWords(array $words,int $length):array{
     $array = [];
     foreach($words as $word){
-      //Verifico o Tamanho da palavra
       $size_word = mb_strlen($word,'UTF-8');
       if($size_word>$length){    
         $wordChunks = $this->split_string_long_word($word,$length);
@@ -44,6 +65,16 @@ class TextWrap implements TextWrapInterface {
     }
     return $array;
   }
+
+  /**
+   * @param string $text
+   *  texto de entrada que você deseja quebrar
+   * @param int $length
+   *  Limite de caracteres por linha
+   * @return array
+   *  Retorna um array de palavras
+   */
+
   public function wrap(string $text, int $length): array {
     //Aqui verifico se o texto passado e vazio
     if(!empty($text)){
