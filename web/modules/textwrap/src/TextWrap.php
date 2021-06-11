@@ -19,38 +19,38 @@ class TextWrap implements TextWrapInterface {
   /**
    * {@inheritdoc}
    */
+  private function split_string_long_word(string $text,int $length):array{
+    $split_word = preg_split('~~u', $text, -1, PREG_SPLIT_NO_EMPTY);
+
+    $chunks = array_chunk($split_word, $length);
+    foreach ($chunks as $i => $chunk) {
+        $chunks[$i] = join('', (array) $chunk);
+    }
+    return $chunks;
+  }
+  private function IdentifierBigWords(array $words,int $length):array{
+    $array = [];
+    foreach($words as $word){
+      //Verifico o Tamanho da palavra
+      $size_word = mb_strlen($word,'UTF-8');
+      if($size_word>$length){    
+        $wordChunks = $this->split_string_long_word($word,$length);
+        foreach($wordChunks as $chunk){
+          $array[] = $chunk;
+        }
+      }else{
+          $array[] = $word;
+      }
+    }
+    return $array;
+  }
   public function wrap(string $text, int $length): array {
     //Aqui verifico se o texto passado e vazio
     if(!empty($text)){
       // Definindo o array que ira ser retornado
       $array = [];
       //Definindo um array aonde ficará as palavras
-      $words = [];
-      /**
-       * Dou um explode na variavel $text passando um delimitador aspas duplas com espaço pois, palavras são separadas umas das outras por espaços
-       * depois disso percorro o array retornado
-       */
-      foreach(explode(" ",$text) as $word){
-        //Verifico o Tamanho da palavra
-        $size_word = mb_strlen($word,'UTF-8');
-        /**
-         * Depois verifico se a palavra e maior que o limite passado na função
-         * E aqui que irei quebrar palavras maiores que o limite $length
-         */
-        if($size_word>$length){    
-          $split_word = preg_split('~~u', $word, -1, PREG_SPLIT_NO_EMPTY);
-                
-          $chunks = array_chunk($split_word, $length);
-          foreach ($chunks as $i => $chunk) {
-              $chunks[$i] = join('', (array) $chunk);
-          }
-          foreach($chunks as $chunk){
-              $words[] = $chunk;
-          }
-        }else{
-            $words[] = $word;
-        }
-      }
+      $words = $this->IdentifierBigWords(explode(" ",$text),$length);
       //Definindo variavel onde ficará as "palavras" atuais
       $wordsNow = "";
       /**
