@@ -122,10 +122,12 @@ class TextWrapTest extends TestCase {
     $this->assertCount(1, $ret);
   }
 
+  /**
+   * Testa para quando a entrada do limite for nula (0 ou < 0)
+   */
   public function testForZero() {
     $ret = $this->resolucao->wrap($this->baseString, 0);
     $this->assertEquals([], $ret);
-    
   }
 
 }
