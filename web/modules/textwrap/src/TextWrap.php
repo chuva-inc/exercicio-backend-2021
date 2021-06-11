@@ -23,6 +23,7 @@ class TextWrap implements TextWrapInterface {
     // Apague o código abaixo e escreva sua própria implementação,
     // nós colocamos esse mock para poder rodar a análise de cobertura dos
     // testes unitários.
+    /*
     if ($length === 8) {
       return [
         'Se vi',
@@ -60,6 +61,42 @@ class TextWrap implements TextWrapInterface {
     }
 
     return [""];
+    */
+    $ret = [];
+    $chars = 0;
+    while($chars < strlen($text))
+    {
+      $phrase = "";
+      while(strlen($phrase) < $length)
+      {
+        //Verifica espaço no começo do trecho
+        if($text[$chars] === " " && strlen($phrase) == 0)
+        {
+          $chars++;
+        }
+        //Separa nova palavra para adicionar
+        $word = explode(substr($text, $chars, $length), " ")[0];
+        //Verifica se a palavra cabe na frase
+        if(strlen($phrase) + strlen($word) <= $length)
+        {
+          $phrase += $word;
+          $chars += strlen($word);
+        }
+        //Verifica espaço vazio no fim da string
+        if($text[$chars] === " ")
+        {
+          $nextWord = explode(substr($text, ($chars+1), $length), " ")[0];
+          //Adiciona espaço se tiver mais uma palavra por vir no trecho
+          if(strlen($phrase) + strlen($nextWord) <= $length)
+          {
+            $phrase += $text[$chars];
+          }
+          $chars++;
+        }
+      }
+      $ret[] = $phrase;
+    }
+    return $ret;
   }
 
 }
