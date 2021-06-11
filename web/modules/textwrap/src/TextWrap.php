@@ -38,23 +38,14 @@ class TextWrap implements TextWrapInterface {
          * E aqui que irei quebrar palavras maiores que o limite $length
          */
         if($size_word>$length){    
-          //Aqui vou separar a palavra atual em um array de caracteres     
-          $split_word = array();
-          $size = mb_strlen($word, "UTF-8");
-          for ($i = 0; $i < $size; $i += $length) {
-              $split_word[] = mb_substr($word, $i, $length, "UTF-8");
+          $split_word = preg_split('~~u', $word, -1, PREG_SPLIT_NO_EMPTY);
+                
+          $chunks = array_chunk($split_word, $length);
+          foreach ($chunks as $i => $chunk) {
+              $chunks[$i] = join('', (array) $chunk);
           }
-          /**
-           * Aqui irei dividir o array de caracteres do $split_word em pedaços, com a função array_chunk
-           * Que ira dividir o array de caracteres de acordo com o $length variavel
-           */
-          $lettersOfWord = array_chunk($split_word,$length);
-          /**
-           * Aqui percorro o array de arrays de $lettersOfWord e junto os pedaços divididos
-           * E depois adiciono cada pedaço agrupado, para dentro do $words variavel
-           */
-          foreach($lettersOfWord as $letters){
-              $words[] = implode("",$letters);
+          foreach($chunks as $chunk){
+              $words[] = $chunk;
           }
         }else{
             $words[] = $word;

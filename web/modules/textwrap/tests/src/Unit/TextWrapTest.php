@@ -18,6 +18,7 @@ class TextWrapTest extends TestCase {
   public function setUp(): void  {
     $this->resolucao = new TextWrap();
     $this->baseString = "Se vi mais longe foi por estar de pé sobre ombros de gigantes";
+    $this->baseStringLong = "hidroxizina paralelepipedo";
   }
 
   /**
@@ -59,5 +60,15 @@ class TextWrapTest extends TestCase {
     $this->assertEquals("gigantes", $ret[5]);
     $this->assertCount(6, $ret);
   }
-
+  /**
+   * Testa a quebra de palavras longas
+   */
+  public function testLongWordTest(){
+    $ret = $this->resolucao->wrap($this->baseStringLong,10);
+    $this->assertEquals("hidroxizin",$ret[0]);
+    $this->assertEquals("a",$ret[1]);
+    $this->assertEquals("paralelepi",$ret[2]);
+    $this->assertEquals("pedo",$ret[3]);
+    $this->assertCount(4,$ret);
+  }
 }
