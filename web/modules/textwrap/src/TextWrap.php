@@ -70,26 +70,30 @@ class TextWrap implements TextWrapInterface {
       while(strlen($phrase) < $length)
       {
         //Verifica espaço no começo do trecho
-        if($text[$chars] === " " && strlen($phrase) == 0)
+        if(!empty($text[$chars]) && $text[$chars] === " " && strlen($phrase) == 0)
         {
           $chars++;
         }
         //Separa nova palavra para adicionar
-        $word = explode(substr($text, $chars, $length), " ")[0];
+        $word = explode(" ", substr($text, $chars, $length))[0];
         //Verifica se a palavra cabe na frase
         if(strlen($phrase) + strlen($word) <= $length)
         {
-          $phrase += $word;
+          $phrase .= $word;
           $chars += strlen($word);
         }
-        //Verifica espaço vazio no fim da string
-        if($text[$chars] === " ")
+        else
         {
-          $nextWord = explode(substr($text, ($chars+1), $length), " ")[0];
+          $chars++;
+        }
+        //Verifica espaço vazio no fim da string
+        if(!empty($text[$chars]) && $text[$chars] === " ")
+        {
+          $nextWord = explode(" ", substr($text, ($chars+1), $length))[0];
           //Adiciona espaço se tiver mais uma palavra por vir no trecho
           if(strlen($phrase) + strlen($nextWord) <= $length)
           {
-            $phrase += $text[$chars];
+            $phrase .= $text[$chars];
           }
           $chars++;
         }
