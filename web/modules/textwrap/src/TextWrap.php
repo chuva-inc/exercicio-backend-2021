@@ -63,43 +63,40 @@ class TextWrap implements TextWrapInterface {
     return [""];
     */
     $ret = [];
-    $chars = 0;
-    while($chars < strlen($text))
+    //Verifica se o texto está vazio e se a largura da frase é positiva
+    if(!empty($text) && $length > 0)
     {
-      $phrase = "";
-      while(strlen($phrase) < $length)
+      $words = explode(" ", $text);
+      //Verifica se há palavras para serem adicionadas
+      if(count($words) === 0)
       {
-        //Verifica espaço no começo do trecho
-        if(!empty($text[$chars]) && $text[$chars] === " " && strlen($phrase) == 0)
+        for($x = 0; $x < count($words); $x++)
         {
-          $chars++;
-        }
-        //Separa nova palavra para adicionar
-        $word = explode(" ", substr($text, $chars, $length))[0];
-        //Verifica se a palavra cabe na frase
-        if(strlen($phrase) + strlen($word) <= $length)
-        {
-          $phrase .= $word;
-          $chars += strlen($word);
-        }
-        else
-        {
-          $chars++;
-        }
-        //Verifica espaço vazio no fim da string
-        if(!empty($text[$chars]) && $text[$chars] === " ")
-        {
-          $nextWord = explode(" ", substr($text, ($chars+1), $length))[0];
-          //Adiciona espaço se tiver mais uma palavra por vir no trecho
-          if(strlen($phrase) + strlen($nextWord) <= $length)
+          $phrase = "";
+          //Verifica se a frase está completa
+          while(strlen($phrase) + strlen($words[$x]) < $length)
           {
-            $phrase .= $text[$chars];
+            if(strlen($phrase) > 0)
+            {
+              if(strlen($phrase) + strlen() + 1 <= $length)
+              {
+                $phrase .= ` ${$words[$x]}`;
+              }
+            }
+            else
+            {
+              if(strlen($phrase) + strlen($words[$x]) <= $length)
+              {
+                $phrase .= ` ${$words[$x]}`;
+              }
+            }
           }
-          $chars++;
+          $ret[] = $phrase;
         }
       }
-      $ret[] = $phrase;
     }
+
+
     return $ret;
   }
 
