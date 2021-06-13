@@ -105,4 +105,36 @@ class TextWrapTest extends TestCase {
     $this->assertCount(17, $ret);
   }
 
+  /**
+   * Testa a quebra de frases em trechos mais longos.
+   */
+  public function testForPhrase() {
+    $ret = $this->resolucao->wrap($this->baseString, 20);
+    $this->assertEquals("Se vi mais longe foi", $ret[0]);
+    $this->assertEquals("por estar de pé", $ret[1]);
+    $this->assertEquals("sobre ombros de", $ret[2]);
+    $this->assertEquals("gigantes", $ret[3]);
+    $this->assertCount(4, $ret);
+  }
+
+  /**
+   * Testa a quebra de frases em trechos mais longos.
+   */
+  public function testForPhrase2() {
+    $ret = $this->resolucao->wrap($this->baseString, 30);
+    $this->assertEquals("Se vi mais longe foi por estar", $ret[0]);
+    $this->assertEquals("de pé sobre ombros de gigantes", $ret[1]);
+    $this->assertCount(2, $ret);
+  }
+
+  /**
+   * Testa a quebra de frases em trechos mais longos.
+   */
+  public function testForPhrase3() {
+    $ret = $this->resolucao->wrap($this->baseString, 45);
+    $this->assertEquals("Se vi mais longe foi por estar de pé sobre", $ret[0]);
+    $this->assertEquals("ombros de gigantes", $ret[1]);
+    $this->assertCount(2, $ret);
+  }
+
 }
