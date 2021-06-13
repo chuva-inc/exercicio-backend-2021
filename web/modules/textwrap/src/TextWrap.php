@@ -64,7 +64,7 @@ class TextWrap implements TextWrapInterface {
     */
     $ret = [];
     //Verifica se o texto está vazio e se a largura da frase é positiva
-    if(!empty($text) && $length > 0)
+    if(!empty($text) && strlen($text) > 0 && $length > 0)
     {
       $words = explode(" ", $text);
       //Verifica se há palavras para serem adicionadas
@@ -91,14 +91,14 @@ class TextWrap implements TextWrapInterface {
         if(count($usableWords) > 0)
         {
           $wordIndex = 0;
-          while($wordIndex < count($usableWords))
+          while($wordIndex < count($usableWords) && array_key_exists($wordIndex, $usableWords))
           {
             $phrase = "";
             do
             {
               $phrase .= (strlen($phrase) > 0 ? " " : "") . $usableWords[$wordIndex++];
             }
-            while(array_key_exists($wordIndex, $usableWords) && (strlen($phrase) + strlen($usableWords[$wordIndex]) + 1 <= $length));
+            while(array_key_exists($wordIndex, $usableWords) && ((strlen($phrase) + strlen($usableWords[$wordIndex]) + 1) <= $length));
             if(!empty($phrase) && strlen($phrase) > 0)
             {
               array_push($ret, $phrase);
@@ -106,6 +106,11 @@ class TextWrap implements TextWrapInterface {
           }
         }
       }
+    }
+    else
+    {
+      //Se o texto for vazio, garante o retorno de array vazio
+      $ret = [null];
     }
     return $ret;
   }
