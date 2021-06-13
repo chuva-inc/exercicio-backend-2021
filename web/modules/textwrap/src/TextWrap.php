@@ -68,35 +68,45 @@ class TextWrap implements TextWrapInterface {
     {
       $words = explode(" ", $text);
       //Verifica se há palavras para serem adicionadas
-      if(count($words) === 0)
+      if(count($words) > 0)
       {
-        for($x = 0; $x < count($words); $x++)
+        $usableWords = [];
+        //Inicia a verificação de palavras maiores que a largura da frase
+        foreach($words as $word)
         {
-          $phrase = "";
-          //Verifica se a frase está completa
-          while(strlen($phrase) + strlen($words[$x]) < $length)
+          if(strlen($word) <= $length)
           {
-            if(strlen($phrase) > 0)
+            array_push($usableWords, $word);
+          }
+          else
+          {
+            //Caso a palavra seja maior que a largura, é dividida
+            $dividedWord = str_split($word, $length);
+            foreach($dividedWord as $div)
             {
-              if(strlen($phrase) + strlen() + 1 <= $length)
-              {
-                $phrase .= ` ${$words[$x]}`;
-              }
-            }
-            else
-            {
-              if(strlen($phrase) + strlen($words[$x]) <= $length)
-              {
-                $phrase .= ` ${$words[$x]}`;
-              }
+              array_push($usableWords, $div);
             }
           }
-          $ret[] = $phrase;
+        }
+        if(count($usableWords) > 0)
+        {
+          $wordIndex = 0;
+          while($wordIndex < count($usableWords))
+          {
+            $phrase = "";
+            do
+            {
+              $phrase .= (strlen($phrase) > 0 ? " " : "") . $usableWords[$wordIndex++];
+            }
+            while(array_key_exists($wordIndex, $usableWords) && (strlen($phrase) + strlen($usableWords[$wordIndex]) + 1 <= $length));
+            if(!empty($phrase) && strlen($phrase) > 0)
+            {
+              array_push($ret, $phrase);
+            }
+          }
         }
       }
     }
-
-
     return $ret;
   }
 
