@@ -60,4 +60,49 @@ class TextWrapTest extends TestCase {
     $this->assertCount(6, $ret);
   }
 
+  /**
+   * Testa a quebra de palavras médias e grandes.
+   */
+  public function testForWordBreak() {
+    $ret = $this->resolucao->wrap($this->baseString, 6);
+    $this->assertEquals("Se vi", $ret[0]);
+    $this->assertEquals("mais", $ret[1]);
+    $this->assertEquals("longe", $ret[2]);
+    $this->assertEquals("foi", $ret[3]);
+    $this->assertEquals("por", $ret[4]);
+    $this->assertEquals("estar", $ret[5]);
+    $this->assertEquals("de pé", $ret[6]);
+    $this->assertEquals("sobre", $ret[7]);
+    $this->assertEquals("ombros", $ret[8]);
+    $this->assertEquals("de", $ret[9]);
+    $this->assertEquals("gigant", $ret[10]);
+    $this->assertEquals("es", $ret[11]);
+    $this->assertCount(12, $ret);
+  }
+
+  /**
+   * Testa a quebra de palavras médias e grandes.
+   */
+  public function testForWordBreak2() {
+    $ret = $this->resolucao->wrap($this->baseString, 4);
+    $this->assertEquals("Se", $ret[0]);
+    $this->assertEquals("vi", $ret[1]);
+    $this->assertEquals("mais", $ret[2]);
+    $this->assertEquals("long", $ret[3]);
+    $this->assertEquals("e", $ret[4]);
+    $this->assertEquals("foi", $ret[5]);
+    $this->assertEquals("por", $ret[6]);
+    $this->assertEquals("esta", $ret[7]);
+    $this->assertEquals("r de", $ret[8]);
+    $this->assertEquals("pé", $ret[9]);
+    $this->assertEquals("sobr", $ret[10]);
+    $this->assertEquals("e", $ret[11]);
+    $this->assertEquals("ombr", $ret[12]);
+    $this->assertEquals("os", $ret[13]);
+    $this->assertEquals("de", $ret[14]);
+    $this->assertEquals("giga", $ret[15]);
+    $this->assertEquals("ntes", $ret[16]);
+    $this->assertCount(17, $ret);
+  }
+
 }
