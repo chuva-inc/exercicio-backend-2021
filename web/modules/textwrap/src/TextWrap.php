@@ -1,65 +1,32 @@
 <?php
+declare(strict_types=1);
 
-namespace Drupal\textwrap;
+namespace Drupal\textwrap; 
 
-/**
- * Implemente sua resolução nessa classe.
- *
- * Depois disso:
- * - [ ] Crie um PR no github com seu código
- * - [ ] Veja o resultado da correção automática do seu código
- * - [ ] Commit até os testes passarem
- * - [ ] Passou tudo, melhore a cobertura dos testes
- * - [ ] Ficou satisfeito, envie seu exercício para a gente! <3
- *
- * Boa sorte :D
- */
 class TextWrap implements TextWrapInterface {
 
-  /**
-   * {@inheritdoc}
-   */
   public function wrap(string $text, int $length): array {
-    // Apague o código abaixo e escreva sua própria implementação,
-    // nós colocamos esse mock para poder rodar a análise de cobertura dos
-    // testes unitários.
-    if ($length === 8) {
-      return [
-        'Se vi',
-        'mais',
-        'longe',
-        'foi por',
-        'estar de',
-        'pé sobre',
-        'ombros',
-        'de',
-        'gigantes',
-      ];
+    $ArrayFinal = [];
+    $ArrayInicial = explode(" ", $text);
+    for ($i = 0; $i < count($ArrayInicial); $i++) {
+      $concat = "";
+      $TamanhoStringIndexArray = mb_strlen($ArrayInicial[$i]); 
+      if ($TamanhoStringIndexArray <= $length) {
+        $concat .=  $ArrayInicial[$i];
+        for ($j = $i + 1; $j < count($ArrayInicial); $j++){
+          if (mb_strlen($concat) + mb_strlen($ArrayInicial[$j]) < $length) {
+            $concat .= " ";
+            $concat .=  $ArrayInicial[$j];
+            $i = $j;
+          } else{
+            break;
+          }
+        }
+        array_push($ArrayFinal, $concat); 
+      } else {
+        array_push($ArrayFinal, $ArrayInicial[$i]);
+      }
     }
-    elseif ($length === 12) {
-      return [
-        'Se vi mais',
-        'longe foi',
-        'por estar de',
-        'pé sobre',
-        'ombros de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 10) {
-      $ret = [
-        'Se vi mais',
-        'longe foi',
-        'por estar',
-        'de pé',
-        'sobre',
-      ];
-      $ret[] = 'ombros de';
-      $ret[] = 'gigantes';
-      return $ret;
-    }
-
-    return [""];
+    return $ArrayFinal;
   }
-
 }
