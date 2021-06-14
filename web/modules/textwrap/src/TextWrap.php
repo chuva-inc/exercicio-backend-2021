@@ -20,46 +20,33 @@ class TextWrap implements TextWrapInterface {
    * {@inheritdoc}
    */
   public function wrap(string $text, int $length): array {
-    // Apague o código abaixo e escreva sua própria implementação,
-    // nós colocamos esse mock para poder rodar a análise de cobertura dos
-    // testes unitários.
-    if ($length === 8) {
-      return [
-        'Se vi',
-        'mais',
-        'longe',
-        'foi por',
-        'estar de',
-        'pé sobre',
-        'ombros',
-        'de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 12) {
-      return [
-        'Se vi mais',
-        'longe foi',
-        'por estar de',
-        'pé sobre',
-        'ombros de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 10) {
-      $ret = [
-        'Se vi mais',
-        'longe foi',
-        'por estar',
-        'de pé',
-        'sobre',
-      ];
-      $ret[] = 'ombros de';
-      $ret[] = 'gigantes';
-      return $ret;
+
+    // Qubrando frase em array de palavras e declarando variaveis
+    $words = explode(" ", $text);
+    $temp = "";
+    $result = array();
+    $total = count($words);
+
+    //Quebrando palavras com mais caracteres que $length
+    for ($i=0; $i < $total ; $i++) {
+        if (mb_strlen($words[$i],'utf8') > $length) {
+            $wrap_word = str_split($words[$i], $length);
+            array_splice($words, $i, 1, $wrap_word);
+            $total = count($words);
+        }
     }
 
-    return [""];
+    //Concatenando $words e gerando $Result
+    foreach ($words as $word) {
+        if (mb_strlen($temp.$word, 'utf8') <= $length) {
+          $temp .= $word . " ";
+        }else{
+            array_push($result, $temp);
+            $temp = $word." ";
+        }
+    }
+    array_push($result, $temp);
+    return $result;
   }
 
 }
