@@ -28,6 +28,7 @@ class TextWrapTest extends TestCase{
     $this->assertEquals("de", $ret[7]);
     $this->assertEquals("gigantes", $ret[8]);
     $this->assertCount(9, $ret);
+    
   }
 
   public function testForSmallWords2() {

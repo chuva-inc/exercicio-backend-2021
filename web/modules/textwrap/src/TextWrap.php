@@ -10,8 +10,7 @@ class TextWrap implements TextWrapInterface {
     $ArrayInicial = explode(" ", $text);
     for ($i = 0; $i < count($ArrayInicial); $i++) {
       $concat = "";
-      $TamanhoStringIndexArray = mb_strlen($ArrayInicial[$i]); 
-      if ($TamanhoStringIndexArray <= $length) {
+      if (mb_strlen($ArrayInicial[$i]) <= $length) {
         $concat .=  $ArrayInicial[$i];
         for ($j = $i + 1; $j < count($ArrayInicial); $j++){
           if (mb_strlen($concat) + mb_strlen($ArrayInicial[$j]) < $length) {
@@ -28,5 +27,5 @@ class TextWrap implements TextWrapInterface {
       }
     }
     return $ArrayFinal;
-  }
+  }  
 }
