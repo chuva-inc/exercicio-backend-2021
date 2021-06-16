@@ -20,6 +20,8 @@ class TextWrapTest extends TestCase {
     $this->baseString = "Se vi mais longe foi por estar de pé sobre ombros de gigantes";
     $this->advancedString = "Convolução";
     $this->advancedString2 = "Se vi mais estável ia ali"; 
+    $this->advancedString3 = "Se estável mais ia ali";
+
     
   }
 
@@ -100,5 +102,16 @@ class TextWrapTest extends TestCase {
     $this->assertCount(5, $ret);
   }
 
+  #Testa se o programa evitar quebrar palavras ao meio, jogando sempre para a próxima linha.
+  public function testForAvoidLineBreak(){
+    $ret = $this->resolucao->wrap($this->advancedString3, 5);
+    $this->assertEquals("Se", $ret[0]);
+    $this->assertEquals("estáv", $ret[1]);
+    $this->assertEquals("el", $ret[2]);
+    $this->assertEquals("mais", $ret[3]);
+    $this->assertEquals("ia", $ret[4]);
+    $this->assertEquals("ali", $ret[5]);
+    $this->assertCount(6, $ret);
+  }
   
 }
