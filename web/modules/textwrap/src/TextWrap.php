@@ -23,43 +23,40 @@ class TextWrap implements TextWrapInterface {
     // Apague o código abaixo e escreva sua própria implementação,
     // nós colocamos esse mock para poder rodar a análise de cobertura dos
     // testes unitários.
-    if ($length === 8) {
-      return [
-        'Se vi',
-        'mais',
-        'longe',
-        'foi por',
-        'estar de',
-        'pé sobre',
-        'ombros',
-        'de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 12) {
-      return [
-        'Se vi mais',
-        'longe foi',
-        'por estar de',
-        'pé sobre',
-        'ombros de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 10) {
-      $ret = [
-        'Se vi mais',
-        'longe foi',
-        'por estar',
-        'de pé',
-        'sobre',
-      ];
-      $ret[] = 'ombros de';
-      $ret[] = 'gigantes';
+
+
+    $explodedText = explode(' ', $text); // use explode to split one string into another given the reference (?)
+    $explodedIndex = 0;
+    $ret = [];
+    $retIndex = 0;
+
+
+    // check if the length or the given string are empty
+    if($length <= 0 || mb_strlen($text, 'utf8') == 0){ // mb_strlen because strlen doesn't work with ~acento gráfico~
+      $ret[0] = '';
       return $ret;
     }
 
-    return [""];
-  }
+    // now let's walk, man
+    for ($i = 0; $i < count($explodedText); $i++){
 
+      // 1st: the size of the sting is >= than the max of characters so just put it in the one to return
+      if(mb_strlen($explodedText[$explodedIndex], 'utf8') >= $length){
+        if (empty($ret[$retIndex])){
+          $ret[$retIndex] = $explodedText[$explodedIndex];
+          $retIndex++;
+          $explodedIndex++;
+        }
+        else{
+          $retIndex++;
+          $ret[$retIndex] = $explodedText[$explodedIndex];
+          $explodedIndex++;
+        }
+      }
+    }
+
+    // echo "to na classe "; 
+    return $ret;
+
+  }
 }
