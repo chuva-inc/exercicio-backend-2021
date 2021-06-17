@@ -18,6 +18,8 @@ class TextWrapTest extends TestCase {
   public function setUp(): void  {
     $this->resolucao = new TextWrap();
     $this->baseString = "Se vi mais longe foi por estar de pé sobre ombros de gigantes";
+    $this->stringSpace = "     ";
+    // $this->baseString = "pé 34567";
   }
 
   /**
@@ -28,10 +30,25 @@ class TextWrapTest extends TestCase {
     $this->assertEmpty($ret[0]);
     $this->assertCount(1, $ret);
   }
-
-  /**
-   * Testa a quebra de linha para palavras curtas.
-   */
+  public function testForEmptyLength() {
+    $ret = $this->resolucao->wrap($this->baseString, 0);
+    $this->assertEmpty($ret[0]);
+    $this->assertCount(1, $ret);
+  }
+  public function testForNegativeLength() {
+    $ret = $this->resolucao->wrap($this->baseString, -1);
+    $this->assertEmpty($ret[0]);
+    $this->assertCount(1, $ret);
+  }
+  public function testForSpaceBeginning(){
+    $ret = $this->resolucao->wrap($this->stringSpace, 10);
+    echo $ret[0];
+    $this->assertEmpty($ret[0]);
+    $this->assertCount(1, $ret);
+  }
+ 
+  // Testa a quebra de linha para palavras curtas.
+   
   public function testForSmallWords() {
     $ret = $this->resolucao->wrap($this->baseString, 8);
     $this->assertEquals("Se vi", $ret[0]);
@@ -46,9 +63,8 @@ class TextWrapTest extends TestCase {
     $this->assertCount(9, $ret);
   }
 
-  /**
-   * Testa a quebra de linha para palavras curtas.
-   */
+   // Testa a quebra de linha para palavras curtas.
+  
   public function testForSmallWords2() {
     $ret = $this->resolucao->wrap($this->baseString, 12);
     $this->assertEquals("Se vi mais", $ret[0]);
@@ -58,6 +74,7 @@ class TextWrapTest extends TestCase {
     $this->assertEquals("ombros de", $ret[4]);
     $this->assertEquals("gigantes", $ret[5]);
     $this->assertCount(6, $ret);
+
   }
 
 }

@@ -80,3 +80,5 @@ Thumbs.db
 
 # Ignore Docker files
 galoa-db-data
+web/modules/textwrap/tests/src/Unit/TextWrapTest2.php
+web/modules/textwrap/src/TextWrap2.php
