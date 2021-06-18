@@ -16,20 +16,13 @@ namespace Drupal\textwrap;
  */
 class TextWrap implements TextWrapInterface {
 
-  /**
-   * {@inheritdoc}
-   */
   public function wrap(string $text, int $length): array {
-    // Apague o código abaixo e escreva sua própria implementação,
-    // nós colocamos esse mock para poder rodar a análise de cobertura dos
-    // testes unitários.
 
     $text = trim($text);
     $explodedText = explode(' ', $text); // use explode to split one string into another given the reference (?)
     $explodedIndex = 0;
     $ret = [];
     $retIndex = 0;
-
 
     // check if the length or the given string are empty
     if($length <= 0 || mb_strlen($text, 'utf8') == 0){ // mb_strlen because strlen doesn't work with ~acento gráfico~
@@ -54,7 +47,7 @@ class TextWrap implements TextWrapInterface {
         }
       }
 
-      // when it isn't? let's see
+      // but when it isn't? let's see
       else{
         if($explodedIndex == 0){ // you don't need to evaluate in the 1st position
           $ret[$retIndex] = $explodedText[$explodedIndex];
