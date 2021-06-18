@@ -24,7 +24,7 @@ class TextWrap implements TextWrapInterface {
     // nós colocamos esse mock para poder rodar a análise de cobertura dos
     // testes unitários.
 
-
+    $text = trim($text);
     $explodedText = explode(' ', $text); // use explode to split one string into another given the reference (?)
     $explodedIndex = 0;
     $ret = [];
@@ -51,6 +51,31 @@ class TextWrap implements TextWrapInterface {
           $retIndex++;
           $ret[$retIndex] = $explodedText[$explodedIndex];
           $explodedIndex++;
+        }
+      }
+
+      // when it isn't? let's see
+      else{
+        if($explodedIndex == 0){ // you don't need to evaluate in the 1st position
+          $ret[$retIndex] = $explodedText[$explodedIndex];
+          $explodedIndex++;
+        }
+        else{
+          if(empty($ret[$retIndex])){ // if it's empty you also just put it in the other array
+            $ret[$retIndex] = $explodedText[$explodedIndex];
+            $explodedIndex++;
+          }
+          else{ // if you can still put in the given position, do it + one space
+            if(mb_strlen($ret[$retIndex], 'utf8') + mb_strlen($explodedText[$explodedIndex], 'utf8') + 1 <= $length){
+              $ret[$retIndex] = "$ret[$retIndex] $explodedText[$explodedIndex]";
+              $explodedIndex++;
+            }
+            else{ // but if you can't just go to the next one
+              $retIndex++;
+              $ret[$retIndex] = $explodedText[$explodedIndex];
+              $explodedIndex++;
+            }
+          }
         }
       }
     }
