@@ -27,11 +27,19 @@ class TextWrapTest extends TestCase {
    * Checa o retorno para strings vazias.
    */
 
+
   public function testForEmptyLength() {
     $ret = $this->resolucao->wrap($this->baseString, 0);
     $this->assertEmpty($ret[0]);
     $this->assertCount(1, $ret);
   }
+
+  public function testForEmptyStrings() {
+    $ret = $this->resolucao->wrap("", 2021);
+    $this->assertEmpty($ret[0]);
+    $this->assertCount(1, $ret);
+  }
+
   public function testForNegativeLength() {
     $ret = $this->resolucao->wrap($this->baseString, -1);
     $this->assertEmpty($ret[0]);
