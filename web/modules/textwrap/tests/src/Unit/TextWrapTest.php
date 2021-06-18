@@ -12,21 +12,12 @@ use PHPUnit\Framework\TestCase;
  */
 class TextWrapTest extends TestCase {
 
-  /**
-   * Test Setup.
-   */
   public function setUp(): void  {
     $this->resolucao = new TextWrap();
     $this->baseString = "Se vi mais longe foi por estar de pé sobre ombros de gigantes";
     $this->stringSpace = "     ";
-    //$this->stringTeste = "Oioi eueu eeee";
-    // $this->baseString = "pé 34567";
+    // $this->stringWordAlone = "gigantes";
   }
-
-  /**
-   * Checa o retorno para strings vazias.
-   */
-
 
   public function testForEmptyLength() {
     $ret = $this->resolucao->wrap($this->baseString, 0);
@@ -47,10 +38,15 @@ class TextWrapTest extends TestCase {
   }
   public function testForSpaceBeginning(){
     $ret = $this->resolucao->wrap($this->stringSpace, 10);
-    echo $ret[0];
+    // echo $ret[0];
     $this->assertEmpty($ret[0]);
     $this->assertCount(1, $ret);
-     
+  }
+
+  public function testForOnlyOneWord(){
+    $ret = $this->resolucao->wrap("gigantes", 10);
+    $this->assertEquals("gigantes", $ret[0]);
+    $this->assertCount(1, $ret);
   }
  
   // Testa a quebra de linha para palavras curtas.
@@ -67,7 +63,6 @@ class TextWrapTest extends TestCase {
     $this->assertEquals("de", $ret[7]);
     $this->assertEquals("gigantes", $ret[8]);
     $this->assertCount(9, $ret);
-    
   }
 
    // Testa a quebra de linha para palavras curtas.
@@ -81,7 +76,6 @@ class TextWrapTest extends TestCase {
     $this->assertEquals("ombros de", $ret[4]);
     $this->assertEquals("gigantes", $ret[5]);
     $this->assertCount(6, $ret);
-  
   }
 
   // public function testForEqualLength() {
