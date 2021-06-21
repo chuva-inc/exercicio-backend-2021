@@ -10,7 +10,7 @@ class TextWrapTest extends TestCase {
   public function setUp(): void  {
     $this->resolucao = new TextWrap();
     $this->baseString = "Se vi mais longe foi por estar de pé sobre ombros de gigantes";
-    $this->stringSpace = "     Se vi mais longe foi por estar     ";
+    $this->stringSpace = "    Se vi mais    ";
   }
 
   public function testForEmptyLength() {
@@ -32,7 +32,7 @@ class TextWrapTest extends TestCase {
   }
   public function testForSpaceStartEnd(){
     $ret = $this->resolucao->wrap($this->stringSpace, 10);
-    $this->assertEmpty($ret[0]);
+    $this->assertEquals($ret[0], "Se vi mais");
     $this->assertCount(1, $ret);
   }
 
