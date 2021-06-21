@@ -5,18 +5,12 @@ namespace Drupal\textwrap\Tests;
 use Drupal\textwrap\TextWrap;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Tests for Drupal\textwrap\TextWrap.
- *
- * @codeCoverageIgnore
- */
 class TextWrapTest extends TestCase {
 
   public function setUp(): void  {
     $this->resolucao = new TextWrap();
     $this->baseString = "Se vi mais longe foi por estar de pé sobre ombros de gigantes";
-    $this->stringSpace = "     ";
-    // $this->stringWordAlone = "gigantes";
+    $this->stringSpace = "     Se vi mais longe foi por estar     ";
   }
 
   public function testForEmptyLength() {
@@ -36,9 +30,8 @@ class TextWrapTest extends TestCase {
     $this->assertEmpty($ret[0]);
     $this->assertCount(1, $ret);
   }
-  public function testForSpaceBeginning(){
+  public function testForSpaceStartEnd(){
     $ret = $this->resolucao->wrap($this->stringSpace, 10);
-    // echo $ret[0];
     $this->assertEmpty($ret[0]);
     $this->assertCount(1, $ret);
   }
@@ -47,9 +40,10 @@ class TextWrapTest extends TestCase {
     $ret = $this->resolucao->wrap("gigantes", 10);
     $this->assertEquals("gigantes", $ret[0]);
     $this->assertCount(1, $ret);
+    $ret = $this->resolucao->wrap("gigantes", 3);
+    $this->assertEquals("gigantes", $ret[0]);
+    $this->assertCount(1, $ret);
   }
- 
-  // Testa a quebra de linha para palavras curtas.
    
   public function testForSmallWords() {
     $ret = $this->resolucao->wrap($this->baseString, 8);
@@ -65,8 +59,6 @@ class TextWrapTest extends TestCase {
     $this->assertCount(9, $ret);
   }
 
-   // Testa a quebra de linha para palavras curtas.
-  
   public function testForSmallWords2() {
     $ret = $this->resolucao->wrap($this->baseString, 12);
     $this->assertEquals("Se vi mais", $ret[0]);
@@ -78,14 +70,5 @@ class TextWrapTest extends TestCase {
     $this->assertCount(6, $ret);
   }
 
-  // public function testForEqualLength() {
-  //   $ret = $this->resolucao->wrap($this->stringTeste, 3);
-  //   $this->assertEquals("Oioi", $ret[0]);
-  //   $this->assertEquals("eueu", $ret[1]);
-  //   $this->assertEquals("eeee", $ret[2]);
-  //   $this->assertCount(3, $ret);
-    
-  //   // echo "passei no teste de maior ou igual"; 
-  // }
 
 }
