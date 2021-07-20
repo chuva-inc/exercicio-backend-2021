@@ -36,7 +36,24 @@ class TextWrap implements TextWrapInterface {
   private function in_strip(string $text): string {
     // Apaga espaços vazios (" ") seguidos, deixando apenas 1 espaço 
     // serve para apagar multiplos espaços entre palavras
-    return $text;  
+    $text_result = $text;
+    $first_whitespace = False;
+    $erased = 0;
+    for ($x = 0; $x < strlen($text); $x++) {
+      if ($text[x] == ' ') {
+        if ($first_whitespace === True) {
+          $str1 = substr($text_result, 0, $x-$erased);
+          $str2 = substr($text_result, $x+1-$erased, strlen($text_results));
+          $text_result = $str1.$str2;
+          $erased ++;
+        } else {
+          $first_whitespace = True;
+        }
+      } else {
+        $first_whitespace = False;
+      }
+    }
+    return $text_result;  
   }
   
   /**
