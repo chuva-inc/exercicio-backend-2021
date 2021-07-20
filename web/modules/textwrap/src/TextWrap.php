@@ -18,17 +18,17 @@ class TextWrap implements TextWrapInterface {
   
   private function strip(string $text): string {
     // Apaga espaços vazios (" ") no começo e no fim da string text
-    $abertura = 0;
-    $fechamento = 0;
+    $open = 0;
+    $close = 0;
 
-    while ($text[abertura] == ' ') {
-      $abertura += 1;
+    while ($text[open] == ' ') {
+      $open += 1;
     }
-    while($text[fechamento] == ' ') {
-      $fechamento  -= 1;
+    while($text[close] == ' ') {
+      $close  -= 1;
     }
 
-    $text = substr($text, abertura, fechamento+1);
+    $text = substr($text, open, close+1);
 
     return $text;  
   }
