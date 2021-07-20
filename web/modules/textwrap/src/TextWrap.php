@@ -29,9 +29,16 @@ class TextWrap implements TextWrapInterface {
     }
 
     $text = substr($text, passo_abertura, passo_fechamento+1);
-    
+
     return $text;  
   }
+
+  private function in_strip(string $text): string {
+    // Apaga espaços vazios (" ") seguidos, deixando apenas 1 espaço 
+    // serve para apagar multiplos espaços entre palavras
+    return $text;  
+  }
+  
   /**
    * {@inheritdoc}
    */
