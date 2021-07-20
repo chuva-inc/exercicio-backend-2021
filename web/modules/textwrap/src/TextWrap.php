@@ -21,14 +21,14 @@ class TextWrap implements TextWrapInterface {
     $open = 0;
     $close = 0;
 
-    while ($text[open] == ' ') {
+    while ($text[$open] == ' ') {
       $open += 1;
     }
-    while($text[close] == ' ') {
+    while($text[$close] == ' ') {
       $close  -= 1;
     }
 
-    $text = substr($text, open, close+1);
+    $text = substr($text, $open, $close+1);
 
     return $text;  
   }
