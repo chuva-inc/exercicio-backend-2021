@@ -25,8 +25,26 @@ class TextWrap implements TextWrapInterface {
 
     $buildingArray = explode(" ", trim($text));
 
-    var_dump($buildingArray);
+    if(empty($buildingArray)){
+      return "";
+    }
 
+    $key = 0;
+
+    foreach($buildingArray as $word){
+      if(empty($resultArray[$key])){
+        $resultArray[$key] = $word;
+      } elseif(strlen($resultArray[$key]) + strlen($word) < $length) {
+        $resultArray[$key] .= ' ' . $word;
+      } else {
+        $key++;
+        $resultArray[$key] = $word;
+      }
+    }
+
+    var_dump($resultArray);
+
+    return $resultArray;
   }
 
 }
