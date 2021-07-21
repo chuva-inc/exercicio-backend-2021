@@ -21,13 +21,13 @@ class TextWrap implements TextWrapInterface {
    */
   public function wrap(string $text, int $length): array {
     
+    if(empty($text)){
+      return [""];
+    }
+
     $resultArray = array();
 
     $buildingArray = explode(" ", trim($text));
-
-    if(empty($buildingArray)){
-      return "";
-    }
 
     $key = 0;
 
@@ -41,20 +41,24 @@ class TextWrap implements TextWrapInterface {
       } elseif(mb_strlen($word) < $length) {
         $resultArray[++$key] = $word;
       } else{
-        $subword = $word;
+        $charsLeft = $word;
         do{
-          if(mb_strlen($subword) < $length){
-            $resultArray = $subword;
-            unset($leftChars);
+          if(mb_strlen($charsLeft) < $length){
+            $resultArray = $charsLeft;
+            unset($charsLeft);
             continue;
           }
-          $leftChars = substr($subword, $length);
-          $subword = substr($subword, 0, $length);
+          $charsLeft = substr($charsLeft, $length);
+          $subword = substr($charsLeft, 0, $length);
           $resultArray[++$key] = $subword;
-        }while(!empty($leftChars));
+        }while(!empty($charsLeft));
       }
      }
-
+     $i = 0;
+     foreach($resultArray as $var){
+      echo '$this->assertEquals(' . $var . ', $ret['. $i++. ']);';
+     }
+    
     return $resultArray;
   }
 
