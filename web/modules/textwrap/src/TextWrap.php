@@ -36,13 +36,14 @@ class TextWrap implements TextWrapInterface {
         $resultArray[$key] = $word;
       } elseif(strlen($resultArray[$key]) + strlen($word) < $length) {
         $resultArray[$key] .= ' ' . $word;
-      } else {
-        $key++;
-        $resultArray[$key] = $word;
+      } elseif(strlen($word) > $length) {
+        $wordChunks = str_split($word, $length);
+        
+        foreach($wordChunks as $chunk){
+          $resultArray[++$key] = $chunk;
+        }
       }
     }
-
-    var_dump($resultArray);
 
     return $resultArray;
   }
