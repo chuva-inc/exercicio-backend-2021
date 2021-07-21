@@ -31,19 +31,29 @@ class TextWrap implements TextWrapInterface {
 
     $key = 0;
 
+    mb_internal_encoding('UTF-8');
+
     foreach($buildingArray as $word){
       if(empty($resultArray[$key])){
         $resultArray[$key] = $word;
-      } elseif(strlen($resultArray[$key]) + strlen($word) < $length) {
+      } elseif(mb_strlen($resultArray[$key]) + mb_strlen($word) < $length) {
         $resultArray[$key] .= ' ' . $word;
-      } elseif(strlen($word) > $length) {
-        $wordChunks = str_split($word, $length);
-        
-        foreach($wordChunks as $chunk){
-          $resultArray[++$key] = $chunk;
-        }
+      } elseif(mb_strlen($word) < $length) {
+        $resultArray[++$key] = $word;
+      } else{
+        $subword = $word;
+        do{
+          if(mb_strlen($subword) < $length){
+            $resultArray = $subword;
+            unset($leftChars);
+            continue;
+          }
+          $leftChars = substr($subword, $length);
+          $subword = substr($subword, 0, $length);
+          $resultArray[++$key] = $subword;
+        }while(!empty($leftChars));
       }
-    }
+     }
 
     return $resultArray;
   }
