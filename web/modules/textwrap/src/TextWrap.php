@@ -40,10 +40,10 @@ class TextWrap implements TextWrapInterface {
     $first_whitespace = False;
     $erased = 0;
     for ($x = 0; $x < strlen($text); $x++) {
-      if ($text[x] == ' ') {
+      if ($text[$x] == ' ') {
         if ($first_whitespace === True) {
           $str1 = substr($text_result, 0, $x-$erased);
-          $str2 = substr($text_result, $x+1-$erased, strlen($text_results));
+          $str2 = substr($text_result, $x+1-$erased, strlen($text_result));
           $text_result = $str1.$str2;
           $erased ++;
         } else {
@@ -103,3 +103,5 @@ class TextWrap implements TextWrapInterface {
   }
 
 }
+
+
