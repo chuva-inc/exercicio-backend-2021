@@ -38,11 +38,12 @@ class TextWrap implements TextWrapInterface {
         $resultArray[$key] = $word;
       } elseif(mb_strlen($resultArray[$key]) + mb_strlen($word) < $length) {
         $resultArray[$key] .= ' ' . $word;
-      } elseif(mb_strlen($word) < $length) {
+      } elseif(mb_strlen($word) <= $length) {
         $resultArray[++$key] = $word;
       } else{
         $charsLeft = $word;
         do{
+          var_dump(mb_strlen($charsLeft) . " + " . $length);
           if(mb_strlen($charsLeft) < $length){
             $resultArray = $charsLeft;
             unset($charsLeft);
@@ -50,13 +51,12 @@ class TextWrap implements TextWrapInterface {
           }
           $charsLeft = substr($charsLeft, $length);
           $subword = substr($charsLeft, 0, $length);
-            $resultArray[++$key] = $subword;
+          if(empty($subword)){
+            var_dump( "charsleft" . $charsLeft, "subword" . $subword, $resultArray);
+          }
+          $resultArray[++$key] = $subword;
         }while(!empty($charsLeft));
       }
-     }
-     $i = 0;
-     foreach($resultArray as $var){
-      echo '$this->assertEquals(' . $var . ', $ret['. $i++. ']);';
      }
     
     return $resultArray;
