@@ -50,7 +50,7 @@ class TextWrap implements TextWrapInterface {
           }
           $charsLeft = substr($charsLeft, $length);
           $subword = substr($charsLeft, 0, $length);
-          $resultArray[++$key] = $subword;
+            $resultArray[++$key] = $subword;
         }while(!empty($charsLeft));
       }
      }

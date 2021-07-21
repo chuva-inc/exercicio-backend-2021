@@ -98,6 +98,7 @@ class TextWrapTest extends TestCase
         $this->assertEquals("ga", $ret[24]);
         $this->assertEquals("nt", $ret[25]);
         $this->assertEquals("es", $ret[26]);
+        $this->assertCount(27, $ret);
     }
 
 }
