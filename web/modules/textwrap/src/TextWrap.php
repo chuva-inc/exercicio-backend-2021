@@ -66,6 +66,8 @@ class TextWrap implements TextWrapInterface {
     
     // se a string estiver vazia
     if (strlen($text) == 0) {return [""];}
+    // se length for 0
+    if ($length == 0) {return [];}
 
     $text = explode(" ", $this->in_strip($this->strip($text)));
     $result = [];
