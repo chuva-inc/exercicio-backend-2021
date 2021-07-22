@@ -18,6 +18,7 @@ class TextWrapTest extends TestCase {
   public function setUp(): void  {
     $this->resolucao = new TextWrap();
     $this->baseString = "Se vi mais longe foi por estar de pé sobre ombros de gigantes";
+    $this->stripString = "   Se vi          mais longe foi por estar de pé sobre ombros de gigantes     ";
   }
 
   /**
