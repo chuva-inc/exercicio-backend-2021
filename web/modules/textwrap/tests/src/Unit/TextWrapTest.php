@@ -80,6 +80,10 @@ class TextWrapTest extends TestCase {
     $this->assertCount(9, $ret);
   }
 
+  /**
+   * Testa a quebra de linha para entrada com vários espaços em branco
+   * entre as palavras.
+   */
   public function testForInStrip() {
     $ret = $this->resolucao->wrap($this->inStripString, 8);
     $this->assertEquals("Se vi", $ret[0]);
