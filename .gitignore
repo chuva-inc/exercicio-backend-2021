@@ -11,6 +11,7 @@ web/sites/default/services.yml
 /web/profiles/contrib/
 /web/libraries/
 /textwrap-coverage-html
+/myreport.html
 
 # Ignore sensitive information
 /web/sites/*/settings.php
