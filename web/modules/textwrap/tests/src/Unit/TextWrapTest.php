@@ -32,6 +32,13 @@ class TextWrapTest extends TestCase
         $this->assertCount(1, $ret);
     }
 
+    public function testForEmptylength()
+    {
+        $ret = $this->resolucao->wrap($this->baseString, 0);
+        $this->assertEmpty($ret[0]);
+        $this->assertCount(1, $ret);
+    }
+
     /**
      * Testa a quebra de linha para palavras curtas.
      */
