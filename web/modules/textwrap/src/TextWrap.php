@@ -64,15 +64,15 @@ class TextWrap implements TextWrapInterface {
     $text_result = [];
     $step = 0;
     $start = 0;
-    $len_text = mb_strlen($text, "utf-8"); 
+    $size_text = mb_strlen($text, "utf-8"); 
 
-    while ($step < $len_text) {  
+    while ($step < $size_text) {  
       // Se encontrar um espaço em branco ou estiver na ultima palavra
-      if (($text[$step] === " ") or ($step === $len_text-1)) {
+      if (($text[$step] === " ") or ($step === $size_text-1)) {
         $end = $step;
         
         // se estiver na ultima letra da ultima palavra
-        if ($step === $len_text-1) {
+        if ($step === $size_text-1) {
           $end ++;
         }
 
@@ -81,6 +81,8 @@ class TextWrap implements TextWrapInterface {
       } 
       $step ++;
     }
+
+    return $text_result;
   }
 
   /**
@@ -90,5 +92,50 @@ class TextWrap implements TextWrapInterface {
     // Apague o código abaixo e escreva sua própria implementação,
     // nós colocamos esse mock para poder rodar a análise de cobertura dos
     // testes unitários.
-    return [];
+    
+    // se a string estiver vazia
+    if (strlen($text) == 0) {return [""];}
+
+    $text = explode(" ", $this->in_strip($this->strip($text)));
+    $result = [];
+    $position = 0;
+    $size_text = count($text); 
+
+    while ($position < $size_text) {
+      $word = $text[$position];
+      $length_words =  mb_strlen($word, "utf-8"); 
+
+      // se o tamanho da palavra selecionada for menor que length
+      if ($length_words <= $length) {
+        $words = $position + 1;
+        $step = $position + 1;
+
+        // se o tamanho das palavras selecionadas para a linha mais o tamanho
+        // da nova palavra for menor que length
+        while (($step < $size_text) and ($length_words +  mb_strlen($text[$step], "utf-8")  < $length)){
+          $length_words += mb_strlen($text[$step], "utf-8")  + 1; // mais 1 representa espaço vazio entra as palavras
+          $words += 1;
+          $step += 1;
+        }
+      
+        // junta as palavras colocando " " entre elas e adiciona no result
+        $text_string = implode(" ", array_slice($text, $position, $words-$position));
+        $result[] = $text_string;
+        $position = $words - 1;
+
+      } else {
+
+        // corta a palavra em duas partes
+        $cut = substr($word, 0, $length);
+        $rest = substr($word, $length);
+        
+        // salva a primeira parte em result e coloca o resto onde a palavra inteira ficava
+        $text[$position] = $rest;
+        $result[] = $cut;
+        $position --;
+      }
+      $position ++;
+    }
+    return $result;
+  }
 }
