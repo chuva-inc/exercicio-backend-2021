@@ -18,7 +18,7 @@ class TextWrapTest extends TestCase {
   public function setUp(): void  {
     $this->resolucao = new TextWrap();
     $this->baseString = "Se vi mais longe foi por estar de pé sobre ombros de gigantes";
-    $this->stripString = "   Se vi          mais longe foi por estar de pé sobre ombros de gigantes     ";
+    $this->stripString = "   Se vi mais longe foi por estar de pé sobre ombros de gigantes     ";
   }
 
   /**
@@ -59,6 +59,20 @@ class TextWrapTest extends TestCase {
     $this->assertEquals("ombros de", $ret[4]);
     $this->assertEquals("gigantes", $ret[5]);
     $this->assertCount(6, $ret);
+  }
+
+  public function testForStrip() {
+    $ret = $this->resolucao->wrap($this->stripString, 8);
+    $this->assertEquals("Se vi", $ret[0]);
+    $this->assertEquals("mais", $ret[1]);
+    $this->assertEquals("longe", $ret[2]);
+    $this->assertEquals("foi por", $ret[3]);
+    $this->assertEquals("estar de", $ret[4]);
+    $this->assertEquals("pé sobre", $ret[5]);
+    $this->assertEquals("ombros", $ret[6]);
+    $this->assertEquals("de", $ret[7]);
+    $this->assertEquals("gigantes", $ret[8]);
+    $this->assertCount(9, $ret);
   }
 
 }
