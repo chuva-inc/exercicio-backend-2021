@@ -28,7 +28,7 @@ class TextWrap implements TextWrapInterface {
       $close  -= 1;
     }
 
-    $text = substr($text, $open, $close+1);
+    $text = substr($text, $open, $close-$open+1);
 
     return $text;  
   }
