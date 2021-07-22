@@ -98,6 +98,10 @@ class TextWrapTest extends TestCase {
     $this->assertCount(9, $ret);
   }
 
+  
+  /**
+   * Testa a função quando length for 0.
+   */
   public function testForZeroLength() {
     $ret = $this->resolucao->wrap($this->inStripString, 0);
     $this->assertEmpty($ret);
