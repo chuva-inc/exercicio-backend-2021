@@ -43,17 +43,15 @@ class TextWrap implements TextWrapInterface {
       } else{
         $charsLeft = $word;
         do{
-          var_dump(mb_strlen($charsLeft) . " + " . $length);
           if(mb_strlen($charsLeft) < $length){
-            $resultArray = $charsLeft;
+            $resultArray[++$key] = $charsLeft;
             unset($charsLeft);
             continue;
           }
-          $charsLeft = substr($charsLeft, $length);
+          var_dump($resultArray);
           $subword = substr($charsLeft, 0, $length);
-          if(empty($subword)){
-            var_dump( "charsleft" . $charsLeft, "subword" . $subword, $resultArray);
-          }
+          var_dump("charsleft: " . $charsLeft . "| subword" . $subword);
+          $charsLeft = substr($charsLeft, $length);
           $resultArray[++$key] = $subword;
         }while(!empty($charsLeft));
       }
