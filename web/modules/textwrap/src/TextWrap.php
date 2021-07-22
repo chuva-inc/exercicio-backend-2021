@@ -56,35 +56,6 @@ class TextWrap implements TextWrapInterface {
     return $text_result;  
   }
   
-  private function split(string $text): array {
-    // Função para dividir string em array de acordo com espaços em branco
-    // exemplo "sobre o ombro de gigantess" ficaria 
-    // ["sobre", "o", "ombro", "de", "gigantes"]
-
-    $text_result = [];
-    $step = 0;
-    $start = 0;
-    $size_text = mb_strlen($text, "utf-8"); 
-
-    while ($step < $size_text) {  
-      // Se encontrar um espaço em branco ou estiver na ultima palavra
-      if (($text[$step] === " ") or ($step === $size_text-1)) {
-        $end = $step;
-        
-        // se estiver na ultima letra da ultima palavra
-        if ($step === $size_text-1) {
-          $end ++;
-        }
-
-        $text_result[] = substr($text, $start, $end-$start);
-        $start = $step + 1;
-      } 
-      $step ++;
-    }
-
-    return $text_result;
-  }
-
   /**
    * {@inheritdoc}
    */
