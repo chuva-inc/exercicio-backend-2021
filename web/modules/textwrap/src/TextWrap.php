@@ -48,9 +48,7 @@ class TextWrap implements TextWrapInterface {
             unset($charsLeft);
             continue;
           }
-          var_dump($resultArray);
           $subword = substr($charsLeft, 0, $length);
-          var_dump("charsleft: " . $charsLeft . "| subword" . $subword);
           $charsLeft = substr($charsLeft, $length);
           $resultArray[++$key] = $subword;
         }while(!empty($charsLeft));
