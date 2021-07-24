@@ -27,41 +27,52 @@ class TextWrap implements TextWrapInterface {
 
     $resultArray = array();
 
-    $buildingArray = explode(" ", trim($text));
-
     $key = 0;
+
+    $buildingArray = explode(" ", trim($text));
 
     mb_internal_encoding('UTF-8');
 
     foreach($buildingArray as $word){
-      if(empty($resultArray[$key]) && mb_strlen($word) < $length){
-        $resultArray[$key] = $word;
-      } elseif(mb_strlen($resultArray[$key]) + mb_strlen($word) < $length) {
-        $resultArray[$key] .= ' ' . $word;
-      } elseif(mb_strlen($word) <= $length) {
-        $resultArray[++$key] = $word;
-      } else{
-        $lengthLeftInArray = $length - mb_strlen($resultArray[$key] . ' ');
-        if($lengthLeftInArray < $length){
-          $charsLeft = mb_substr($word, $lengthLeftInArray);
-          $subword = mb_substr($word, 0, $lengthLeftInArray);
-          $resultArray[$key] .= ' ' . $subword;
-        } else{
-          $charsLeft = $word;
-        }
-        do{
-          if(mb_strlen($charsLeft) < $length){
-            $resultArray[++$key] = $charsLeft;
-            unset($charsLeft);
-            continue;
-          }
-            $subword = mb_substr($charsLeft, 0, $length);
-            $charsLeft = mb_substr($charsLeft, $length);
-            $resultArray[++$key] = $subword;
-        }while(!empty($charsLeft));
-      }
+      $this->process_word($word, $resultArray, $key, $length);
      }
     return $resultArray;
   }
 
+  private function process_word($word, &$resultArray, &$key, $length){
+    if(empty($resultArray[$key]) && mb_strlen($word) < $length){
+      $resultArray[$key] = $word;
+    } elseif(mb_strlen($resultArray[$key]) + mb_strlen($word) < $length) {
+      $resultArray[$key] .= ' ' . $word;
+    } elseif(mb_strlen($word) <= $length) {
+      $resultArray[++$key] = $word;
+    } else{
+      $this->wrap_word($word, $resultArray, $key, $length);
+    }
+  }
+
+  private function wrap_word($word, &$resultArray, &$key, $length) {
+    $lengthLeftInArray = $length - mb_strlen($resultArray[$key] . ' ');
+    if($lengthLeftInArray < $length){
+      $charsLeft = mb_substr($word, $lengthLeftInArray);
+      $subword = mb_substr($word, 0, $lengthLeftInArray);
+      $resultArray[$key] .= ' ' . $subword;
+    } else{
+      $charsLeft = $word;
+    }
+    do{
+      if(mb_strlen($charsLeft) < $length){
+        $resultArray[++$key] = $charsLeft;
+        unset($charsLeft);
+        continue;
+      }
+        $subword = mb_substr($charsLeft, 0, $length);
+        $charsLeft = mb_substr($charsLeft, $length);
+        $resultArray[++$key] = $subword;
+    }while(!empty($charsLeft));
+  }
+
 }
+
+
+
