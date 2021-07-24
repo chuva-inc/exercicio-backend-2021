@@ -47,25 +47,29 @@ class TextWrap implements TextWrapInterface {
     } elseif(mb_strlen($word) <= $length) {
       $resultArray[++$key] = $word;
     } else{
-      $lengthLeftInArray = $length - mb_strlen($resultArray[$key] . ' ');
-      if($lengthLeftInArray < $length){
-        $charsLeft = mb_substr($word, $lengthLeftInArray);
-        $subword = mb_substr($word, 0, $lengthLeftInArray);
-        $resultArray[$key] .= ' ' . $subword;
-      } else{
-        $charsLeft = $word;
-      }
-      do{
-        if(mb_strlen($charsLeft) < $length){
-          $resultArray[++$key] = $charsLeft;
-          unset($charsLeft);
-          continue;
-        }
-          $subword = mb_substr($charsLeft, 0, $length);
-          $charsLeft = mb_substr($charsLeft, $length);
-          $resultArray[++$key] = $subword;
-      }while(!empty($charsLeft));
+      $this->wrap_word($word, $resultArray, $key, $length);
     }
+  }
+
+  private function wrap_word($word, &$resultArray, $key, $length) {
+    $lengthLeftInArray = $length - mb_strlen($resultArray[$key] . ' ');
+    if($lengthLeftInArray < $length){
+      $charsLeft = mb_substr($word, $lengthLeftInArray);
+      $subword = mb_substr($word, 0, $lengthLeftInArray);
+      $resultArray[$key] .= ' ' . $subword;
+    } else{
+      $charsLeft = $word;
+    }
+    do{
+      if(mb_strlen($charsLeft) < $length){
+        $resultArray[++$key] = $charsLeft;
+        unset($charsLeft);
+        continue;
+      }
+        $subword = mb_substr($charsLeft, 0, $length);
+        $charsLeft = mb_substr($charsLeft, $length);
+        $resultArray[++$key] = $subword;
+    }while(!empty($charsLeft));
   }
 
 }
