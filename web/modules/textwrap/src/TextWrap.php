@@ -39,7 +39,7 @@ class TextWrap implements TextWrapInterface {
     return $resultArray;
   }
 
-  private function process_word($word, &$resultArray, $key, $length){
+  private function process_word($word, &$resultArray, &$key, $length){
     if(empty($resultArray[$key]) && mb_strlen($word) < $length){
       $resultArray[$key] = $word;
     } elseif(mb_strlen($resultArray[$key]) + mb_strlen($word) < $length) {
@@ -51,7 +51,7 @@ class TextWrap implements TextWrapInterface {
     }
   }
 
-  private function wrap_word($word, &$resultArray, $key, $length) {
+  private function wrap_word($word, &$resultArray, &$key, $length) {
     $lengthLeftInArray = $length - mb_strlen($resultArray[$key] . ' ');
     if($lengthLeftInArray < $length){
       $charsLeft = mb_substr($word, $lengthLeftInArray);
