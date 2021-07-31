@@ -25,14 +25,14 @@ class TextWrapTest extends TestCase
     /**
      * Checa o retorno para strings vazias.
      */
-    public function testForEmptyStrings()
+    public function whenInputStringIsEmptyThenReturnArrayWithEmptyString()
     {
         $ret = $this->resolucao->wrap("", 2021);
         $this->assertEmpty($ret[0]);
         $this->assertCount(1, $ret);
     }
 
-    public function testForEmptyLength()
+    public function whenInputLengthIsZeroThenReturnArrayWithEmptyString()
     {
         $ret = $this->resolucao->wrap($this->baseString, 0);
         $this->assertEmpty($ret[0]);
@@ -42,7 +42,7 @@ class TextWrapTest extends TestCase
     /**
      * Testa a quebra de linha para palavras curtas.
      */
-    public function testForSmallWords()
+    public function whenWordsInStringFitsLengthInputThenReturnArrayWithWrapedLines()
     {
         $ret = $this->resolucao->wrap($this->baseString, 8);
         $this->assertEquals("Se vi", $ret[0]);
@@ -60,7 +60,7 @@ class TextWrapTest extends TestCase
     /**
      * Testa a quebra de linha para palavras curtas.
      */
-    public function testForSmallWords2()
+    public function whenWordsInStringFitsLengthInputThenReturnArrayWithWrapedLines2()
     {
         $ret = $this->resolucao->wrap($this->baseString, 12);
         $this->assertEquals("Se vi mais", $ret[0]);
@@ -75,7 +75,7 @@ class TextWrapTest extends TestCase
     /**
      * Testa a quebra de linha para palavras curtas.
      */
-    public function testForSmallWords3()
+    public function whenWordsInStringAreBiggerThanLengthInputThenReturnArrayWithWrapedWords()
     {
         $ret = $this->resolucao->wrap($this->baseString, 7);
         $this->assertEquals("Se vi", $ret[0]);
