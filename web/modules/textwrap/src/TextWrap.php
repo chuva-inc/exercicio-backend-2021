@@ -21,7 +21,7 @@ class TextWrap implements TextWrapInterface {
    */
   public function wrap(string $text, int $length): array {
     
-    if(empty($text) || $length == 0){
+    if(empty($text) || $length <= 0){
       return [""];
     }
 
