@@ -39,6 +39,12 @@ class TextWrapTest extends TestCase
         $this->assertCount(1, $ret);
     }
 
+    public function whenInputLengthIsNegativeThenReturnArrayWithEmptyString() {
+        $ret = $this->resolucao->wrap($this->baseString, -1);
+        $this->assertEmpty($ret[0]);
+        $this->assertCount(1, $ret);
+    }
+
     /**
      * Testa a quebra de linha para palavras curtas.
      */
