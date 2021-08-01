@@ -53,7 +53,7 @@ class TextWrap implements TextWrapInterface {
  * 
 */
   public function setNewPartsLength(array $parts, int $length) {
-      // determina a codifição dos caracteres para a função
+    // determina a codifição dos caracteres para a função
     // mb_strlen, para evitar erros.
     $encoding = "utf-8";
     // variável temporária para armazenar as novas strings.
