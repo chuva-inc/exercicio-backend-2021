@@ -20,46 +20,59 @@ class TextWrap implements TextWrapInterface {
    * {@inheritdoc}
    */
   public function wrap(string $text, int $length): array {
-    // Apague o código abaixo e escreva sua própria implementação,
-    // nós colocamos esse mock para poder rodar a análise de cobertura dos
-    // testes unitários.
-    if ($length === 8) {
-      return [
-        'Se vi',
-        'mais',
-        'longe',
-        'foi por',
-        'estar de',
-        'pé sobre',
-        'ombros',
-        'de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 12) {
-      return [
-        'Se vi mais',
-        'longe foi',
-        'por estar de',
-        'pé sobre',
-        'ombros de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 10) {
-      $ret = [
-        'Se vi mais',
-        'longe foi',
-        'por estar',
-        'de pé',
-        'sobre',
-      ];
-      $ret[] = 'ombros de';
-      $ret[] = 'gigantes';
-      return $ret;
+    
+    if(empty($text) || $length <= 0){
+      return [""];
     }
 
-    return [""];
+    $resultArray = array();
+
+    $key = 0;
+
+    $buildingArray = explode(" ", trim($text));
+
+    mb_internal_encoding('UTF-8');
+
+    foreach($buildingArray as $word){
+      $this->process_word($word, $resultArray, $key, $length);
+     }
+    return $resultArray;
+  }
+
+  private function process_word($word, &$resultArray, &$key, $length){
+    if(empty($resultArray[$key]) && mb_strlen($word) < $length){
+      $resultArray[$key] = $word;
+    } elseif(mb_strlen($resultArray[$key]) + mb_strlen($word) < $length) {
+      $resultArray[$key] .= ' ' . $word;
+    } elseif(mb_strlen($word) <= $length) {
+      $resultArray[++$key] = $word;
+    } else{
+      $this->wrap_word($word, $resultArray, $key, $length);
+    }
+  }
+
+  private function wrap_word($word, &$resultArray, &$key, $length) {
+    $lengthLeftInArray = $length - mb_strlen($resultArray[$key] . ' ');
+    if($lengthLeftInArray < $length){
+      $charsLeft = mb_substr($word, $lengthLeftInArray);
+      $subword = mb_substr($word, 0, $lengthLeftInArray);
+      $resultArray[$key] .= ' ' . $subword;
+    } else{
+      $charsLeft = $word;
+    }
+    do{
+      if(mb_strlen($charsLeft) < $length){
+        $resultArray[++$key] = $charsLeft;
+        unset($charsLeft);
+        continue;
+      }
+        $subword = mb_substr($charsLeft, 0, $length);
+        $charsLeft = mb_substr($charsLeft, $length);
+        $resultArray[++$key] = $subword;
+    }while(!empty($charsLeft));
   }
 
 }
+
+
+

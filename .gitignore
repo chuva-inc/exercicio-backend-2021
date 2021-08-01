@@ -10,6 +10,8 @@ web/sites/default/services.yml
 /web/themes/contrib/
 /web/profiles/contrib/
 /web/libraries/
+/textwrap-coverage-html
+/myreport.html
 
 # Ignore sensitive information
 /web/sites/*/settings.php
