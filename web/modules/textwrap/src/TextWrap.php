@@ -28,7 +28,7 @@ class TextWrap implements TextWrapInterface {
     if (!isset($parts)) { return [""]; }
 
     // A resolução vai aqui abaixo :)
-    $parts = orderParts($parts, $length);
+    $parts = setNewPartsLength($parts, $length);
 
     return $parts;
   }
