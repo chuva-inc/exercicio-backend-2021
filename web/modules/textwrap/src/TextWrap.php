@@ -1,8 +1,6 @@
 <?php
+namespace Drupal\textwrap;
 
-require "TextWrapInterface.php";
-require "WordExtractor.php";
-require "ArrayOrganizer.php";
 /**
  * Implemente sua resolução nessa classe.
  *
@@ -28,10 +26,14 @@ class TextWrap implements TextWrapInterface
     // testes unitários.
     $res[] = NULL;
     $arrayAux[] = NULL;
+
+    // Declarando as classes das funções
+    $extrair = new WordExtractor();
+    $organizar = new ArrayOrganizer();
     // Chama-se a função criada para extrair as palavras, chamada de wordExtractor.
-    $arrayAux = wordExtractor($text);
+    $arrayAux = $extrair->wordExtractor($text);
     //$arrayAux[count($arrayAux)] = "end";
-    $res = arrayOrganizer($arrayAux, $length);
+    $res = $organizar->arrayOrganizer($arrayAux, $length);
     return $res;
   }
 }
