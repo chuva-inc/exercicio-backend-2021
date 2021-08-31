@@ -20,46 +20,22 @@ class TextWrap implements TextWrapInterface {
    * {@inheritdoc}
    */
   public function wrap(string $text, int $length): array {
-    // Apague o código abaixo e escreva sua própria implementação,
-    // nós colocamos esse mock para poder rodar a análise de cobertura dos
-    // testes unitários.
-    if ($length === 8) {
-      return [
-        'Se vi',
-        'mais',
-        'longe',
-        'foi por',
-        'estar de',
-        'pé sobre',
-        'ombros',
-        'de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 12) {
-      return [
-        'Se vi mais',
-        'longe foi',
-        'por estar de',
-        'pé sobre',
-        'ombros de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 10) {
-      $ret = [
-        'Se vi mais',
-        'longe foi',
-        'por estar',
-        'de pé',
-        'sobre',
-      ];
-      $ret[] = 'ombros de';
-      $ret[] = 'gigantes';
-      return $ret;
-    }
-
-    return [""];
+    //Defino o valor da variável
+    $text = "Sobre os ombros de gigantes eu consigo ver mais longe";
+    //Seto um array vazio
+    $array = [];
+    //Uso um loop for para percorrer a variável sempre que o contador for menor 
+    //que a variável $text
+    for ($i=0; $i<strlen($text); $i++) {
+  
+      if ($text[$i] != "-") { 
+        $array[] = $text[$i]; 
   }
+}
+print_r($array); 
+        
+}
 
 }
+
+
