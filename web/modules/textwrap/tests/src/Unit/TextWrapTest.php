@@ -60,4 +60,50 @@ class TextWrapTest extends TestCase {
     $this->assertCount(6, $ret);
   }
 
+  /**
+   * Checa retorno quando tamanho da linha é igual a 0
+   */
+  public function testForZeroLength() {
+    $ret = $this->resolucao->wrap($this->baseString, 0);
+    $this->assertEquals("", $ret[0]);
+    $this->assertCount(1, $ret);
+  }
+
+  /**
+   * Checa retorno quando tamanho da linha é um número negativo
+   */
+  public function testForNegativeLength() {
+    $ret = $this->resolucao->wrap($this->baseString, -2);
+    $this->assertEquals("", $ret[0]);
+    $this->assertCount(1, $ret);
+  }
+  
+  /**
+   * Testa a retirada de espaços em brando desenecessários.
+   */
+  public function testForBlankSpaces() {
+    $ret = $this->resolucao->wrap("  Não somos   apenas o que podemos ser ", 40);
+    $this->assertEquals("Não somos apenas o que podemos ser", $ret[0]);
+    $this->assertCount(1, $ret);
+  }
+
+  /**
+   * Checa o retorno para strings que contém apenas espaços em branco.
+   */
+  public function testForBlankStrings() {
+    $ret = $this->resolucao->wrap("    ", 1000);
+    $this->assertEmpty($ret[0]);
+    $this->assertCount(1, $ret);
+  }
+
+  /**
+   * Testa a quebra de uma palavra quando ela excede o tamanho da linha
+   */
+  public function testForSmallLength() {
+    $ret = $this->resolucao->wrap("Dinossauro", 4);
+    $this->assertEquals("Dino", $ret[0]);
+    $this->assertEquals("ssau", $ret[1]);
+    $this->assertEquals("ro", $ret[2]);
+    $this->assertCount(3, $ret);
+  }
 }
