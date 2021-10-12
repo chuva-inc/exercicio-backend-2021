@@ -88,6 +88,20 @@ class TextWrapTest extends TestCase {
   }
 
   /**
+   * Testa a retirada de espaços em brando desenecessários quando
+   * a frase é quebrada em linhas
+   */
+  public function testForBlankSpacesAndSmallWords() {
+    $ret = $this->resolucao->wrap("  Não somos   apenas o que podemos ser ", 10);
+    $this->assertEquals("Não somos", $ret[0]); 
+    $this->assertEquals("apenas o", $ret[1]);
+    $this->assertEquals("que", $ret[2]);
+    $this->assertEquals("podemos", $ret[3]);
+    $this->assertEquals("ser", $ret[4]);
+    $this->assertCount(5, $ret);
+  }
+
+  /**
    * Checa o retorno para strings que contém apenas espaços em branco.
    */
   public function testForBlankStrings() {
