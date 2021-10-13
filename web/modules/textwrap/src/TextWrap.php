@@ -8,8 +8,6 @@ class TextWrap implements TextWrapInterface {
    * {@inheritdoc}
    */
   public function wrap(string $text, int $length): array {
-    //Caso seja passado um texto vazio ou um número menor ou igual a zero
-    //retorna-se uma string vazia
     if(empty($text) || $length <= 0){
       return [""];
     }
@@ -33,13 +31,20 @@ class TextWrap implements TextWrapInterface {
           $currentLine = "";
         }
 
-        // Adiciona-se um espaço vazio entre as palavras, exceto se for a primeira da linha
-        if (mb_strlen($currentLine) !== 0) {
-          $currentLine .= " "; 
+        /**
+         * Adiciona-se um espaço vazio entre as palavras, 
+         * exceto se for a primeira da linha 
+         * ou se existir mais de um espaço vazio seguido no texto original.
+         */
+        if (
+          mb_strlen($currentLine) !== 0 && 
+          mb_strlen($currentWord) !== 0
+        ) {
+          $currentWord = ' ' . $currentWord;
         }
 
         // Adiciona a palavra na linha e coloca $currentWord como vazio 
-        $currentLine .= $currentWord; 
+        $currentLine .= $currentWord;
         $currentWord = "";
       } else {
         $currentWord .= $char;
@@ -56,7 +61,7 @@ class TextWrap implements TextWrapInterface {
       array_push($result, $currentLine);
       array_push($result, $currentWord);
     } else {
-      $currentLine .= " " . $currentWord;
+      $currentLine .= $currentWord;
       array_push($result, $currentLine);
     }
 

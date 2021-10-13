@@ -82,7 +82,7 @@ class TextWrapTest extends TestCase {
    * Testa a retirada de espaços em brando desenecessários.
    */
   public function testForBlankSpaces() {
-    $ret = $this->resolucao->wrap("  Não somos   apenas o que podemos ser ", 40);
+    $ret = $this->resolucao->wrap("  Não somos   apenas o  que podemos ser  ", 40);
     $this->assertEquals("Não somos apenas o que podemos ser", $ret[0]);
     $this->assertCount(1, $ret);
   }
@@ -92,7 +92,7 @@ class TextWrapTest extends TestCase {
    * a frase é quebrada em linhas
    */
   public function testForBlankSpacesAndSmallWords() {
-    $ret = $this->resolucao->wrap("  Não somos   apenas o que podemos ser ", 10);
+    $ret = $this->resolucao->wrap("  Não somos   apenas o  que podemos ser  ", 10);
     $this->assertEquals("Não somos", $ret[0]); 
     $this->assertEquals("apenas o", $ret[1]);
     $this->assertEquals("que", $ret[2]);
