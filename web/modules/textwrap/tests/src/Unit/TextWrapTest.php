@@ -18,6 +18,7 @@ class TextWrapTest extends TestCase {
   public function setUp(): void  {
     $this->resolucao = new TextWrap();
     $this->baseString = "Se vi mais longe foi por estar de pé sobre ombros de gigantes";
+    $this->testString = "  Não somos   apenas o  que podemos ser  ";
   }
 
   /**
@@ -61,6 +62,26 @@ class TextWrapTest extends TestCase {
   }
 
   /**
+   * Testa a quebra de linha para palavras curtas.
+   */
+  public function testForSmallWords3() {
+    $ret = $this->resolucao->wrap($this->baseString, 5);
+    $this->assertEquals("Se vi", $ret[0]);
+    $this->assertEquals("mais", $ret[1]);
+    $this->assertEquals("longe", $ret[2]);
+    $this->assertEquals("foi", $ret[3]);
+    $this->assertEquals("por", $ret[4]);
+    $this->assertEquals("estar", $ret[5]);
+    $this->assertEquals("de pé", $ret[6]);
+    $this->assertEquals("sobre", $ret[7]);
+    $this->assertEquals("ombro", $ret[8]);
+    $this->assertEquals("s de", $ret[9]);
+    $this->assertEquals("gigan", $ret[10]);
+    $this->assertEquals("tes", $ret[11]);
+    $this->assertCount(12, $ret);
+  }
+
+  /**
    * Checa retorno quando tamanho da linha é igual a 0
    */
   public function testForZeroLength() {
@@ -77,12 +98,22 @@ class TextWrapTest extends TestCase {
     $this->assertEquals("", $ret[0]);
     $this->assertCount(1, $ret);
   }
-  
+
   /**
    * Testa a retirada de espaços em brando desenecessários.
    */
   public function testForBlankSpaces() {
-    $ret = $this->resolucao->wrap("  Não somos   apenas o  que podemos ser  ", 40);
+    $ret = $this->resolucao->wrap("      .    b", 1);
+    $this->assertEquals(".", $ret[0]);
+    $this->assertEquals("b", $ret[1]);
+    $this->assertCount(1, $ret);
+  }
+
+    /**
+   * Testa a retirada de espaços em brando desenecessários.
+   */
+  public function testForBlankSpaces2() {
+    $ret = $this->resolucao->wrap($this->testString, 40);
     $this->assertEquals("Não somos apenas o que podemos ser", $ret[0]);
     $this->assertCount(1, $ret);
   }
@@ -92,13 +123,31 @@ class TextWrapTest extends TestCase {
    * a frase é quebrada em linhas
    */
   public function testForBlankSpacesAndSmallWords() {
-    $ret = $this->resolucao->wrap("  Não somos   apenas o  que podemos ser  ", 10);
+    $ret = $this->resolucao->wrap($this->testString, 10);
     $this->assertEquals("Não somos", $ret[0]); 
     $this->assertEquals("apenas o", $ret[1]);
     $this->assertEquals("que", $ret[2]);
     $this->assertEquals("podemos", $ret[3]);
     $this->assertEquals("ser", $ret[4]);
     $this->assertCount(5, $ret);
+  }
+
+  /**
+   * Testa a retirada de espaços em brando desenecessários quando
+   * a frase é quebrada em linhas
+   */
+  public function testForBlankSpacesAndSmallWords2() {
+    $ret = $this->resolucao->wrap($this->testString, 4);
+    $this->assertEquals("Não", $ret[0]);
+    $this->assertEquals("somo", $ret[1]); 
+    $this->assertEquals("s", $ret[2]); 
+    $this->assertEquals("apen", $ret[3]);
+    $this->assertEquals("as o", $ret[4]);
+    $this->assertEquals("que", $ret[5]);
+    $this->assertEquals("pode", $ret[6]);
+    $this->assertEquals("mos", $ret[7]);
+    $this->assertEquals("ser", $ret[8]);
+    $this->assertCount(9, $ret);
   }
 
   /**
@@ -119,5 +168,19 @@ class TextWrapTest extends TestCase {
     $this->assertEquals("ssau", $ret[1]);
     $this->assertEquals("ro", $ret[2]);
     $this->assertCount(3, $ret);
+  }
+
+    /**
+   * Testa a quebra de uma palavra quando ela excede o tamanho da linha
+   */
+  public function testForSmallLength2() {
+    $ret = $this->resolucao->wrap("Eu gosto de Dinossauro b", 4);
+    $this->assertEquals("Eu", $ret[0]);
+    $this->assertEquals("gost", $ret[1]);
+    $this->assertEquals("o de", $ret[2]);
+    $this->assertEquals("Dino", $ret[3]);
+    $this->assertEquals("ssau", $ret[4]);
+    $this->assertEquals("ro b", $ret[5]);
+    $this->assertCount(6, $ret);
   }
 }
