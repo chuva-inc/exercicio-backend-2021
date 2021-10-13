@@ -20,6 +20,16 @@ class TextWrap implements TextWrapInterface {
       // Pega o caractere atual
       $char = mb_substr($text, $pos, 1);
 
+      // Se a atual palavra for mair que o tamanho da linha, a palvra é cortada.
+      if(mb_strlen($currentWord) === $length){
+        if(!empty($currentLine)){
+          array_push($result, $currentLine);
+          $currentLine = "";
+        }
+        array_push($result, $currentWord);
+        $currentWord = "";
+      }
+
       // Um espaço vazio indica o fim de uma palavra e o começo da próxima
       if($char === ' '){
         /** 
