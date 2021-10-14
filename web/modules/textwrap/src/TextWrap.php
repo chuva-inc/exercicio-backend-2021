@@ -13,6 +13,7 @@ class TextWrap implements TextWrapInterface {
     }
 
     $result = array();
+    $text .= ' ';
     $currentWord = "";
     $currentLine = "";
     // Percorre a String $text
@@ -47,8 +48,8 @@ class TextWrap implements TextWrapInterface {
          * ou se existir mais de um espaço vazio seguido no texto original.
          */
         if (
-          mb_strlen($currentLine) !== 0 && 
-          mb_strlen($currentWord) !== 0
+          !empty($currentLine) && 
+          !empty($currentWord)
         ) {
           $currentWord = ' ' . $currentWord;
         }
@@ -61,20 +62,13 @@ class TextWrap implements TextWrapInterface {
       }
     }
 
-    // Adiciona as linhas finais a $result
-
-    /**
-     * Se a última palavra não couber na linha, então $currentLine será inserido
-     * primeiro e $currentWord virá depois, em uma linha separas
-     */ 
-    if(mb_strlen($currentWord)+1 + mb_strlen($currentLine) > $length) {
-      array_push($result, $currentLine);
-      array_push($result, $currentWord);
-    } else {
-      $currentLine .= $currentWord;
+    //insere última linha caso não esteja vazia
+    if(!empty($currentLine)){
       array_push($result, $currentLine);
     }
 
+    // Adiciona uma string vazia a $result caso não exista nenhuma linha no array
+    $result = empty($result) ? [""] : $result;
     return $result;
   }
 }

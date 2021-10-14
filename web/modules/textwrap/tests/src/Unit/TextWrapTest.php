@@ -106,7 +106,7 @@ class TextWrapTest extends TestCase {
     $ret = $this->resolucao->wrap("      .    b", 1);
     $this->assertEquals(".", $ret[0]);
     $this->assertEquals("b", $ret[1]);
-    $this->assertCount(1, $ret);
+    $this->assertCount(2, $ret);
   }
 
     /**
@@ -170,7 +170,7 @@ class TextWrapTest extends TestCase {
     $this->assertCount(3, $ret);
   }
 
-    /**
+  /**
    * Testa a quebra de uma palavra quando ela excede o tamanho da linha
    */
   public function testForSmallLength2() {
@@ -182,5 +182,16 @@ class TextWrapTest extends TestCase {
     $this->assertEquals("ssau", $ret[4]);
     $this->assertEquals("ro b", $ret[5]);
     $this->assertCount(6, $ret);
+  }
+
+  /**
+   * Testa a inserção correta de uma letra solitária no fim do texto
+   */
+  public function testOneLetterOnEnd() {
+    $ret = $this->resolucao->wrap("c c c", 1);
+    $this->assertEquals("c", $ret[0]);
+    $this->assertEquals("c", $ret[1]);
+    $this->assertEquals("c", $ret[2]);
+    $this->assertCount(3, $ret);
   }
 }
