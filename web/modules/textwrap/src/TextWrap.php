@@ -13,7 +13,7 @@ class TextWrap implements TextWrapInterface {
     }
 
     $result = array();
-    $text .= ' ';
+    $text .= ' '; // faz colocar a última palavra do texto em $currentLine
     $currentWord = "";
     $currentLine = "";
     // Percorre a String $text
@@ -21,40 +21,38 @@ class TextWrap implements TextWrapInterface {
       // Pega o caractere atual
       $char = mb_substr($text, $pos, 1);
 
-      // Se a atual palavra for mair que o tamanho da linha, a palvra é cortada.
-      if(mb_strlen($currentWord) === $length){
+      // Acompanha o crescimento da linha até atingir o tamanho máximo
+      if(mb_strlen($currentWord) + mb_strlen($currentLine) === $length) {
+        // Se a linha não estiver vazia ela é adicinada a $result
         if(!empty($currentLine)){
           array_push($result, $currentLine);
           $currentLine = "";
+        } else {
+          /** 
+           * Se estiver vazia, indica que $currenteWord já atingiu o
+           * tamanho máximo da linha, e por isso a palavra será cortada 
+           * em pedaços e adicionada a mais de uma linha
+           */ 
+          array_push($result, $currentWord);
+          $currentWord = "";
         }
-        array_push($result, $currentWord);
-        $currentWord = "";
       }
 
       // Um espaço vazio indica o fim de uma palavra e o começo da próxima
       if($char === ' '){
-        /** 
-         * Verifica se cabe mais uma palavra na linha
-         * se não couber insere a linha no array e coloca a palavra na próxima linha
-         */
-        if(mb_strlen($currentWord)+1 + mb_strlen($currentLine) > $length) {
-          array_push($result, $currentLine);
-          $currentLine = "";
-        }
-
         /**
-         * Adiciona-se um espaço vazio entre as palavras, 
+         * Adiciona-se um espaço vazio antes de cada palavra, 
          * exceto se for a primeira da linha 
-         * ou se existir mais de um espaço vazio seguido no texto original.
+         * ou se $currentWord estiver vazio
          */
         if (
           !empty($currentLine) && 
           !empty($currentWord)
         ) {
-          $currentWord = ' ' . $currentWord;
+          $currentLine .= ' ';
         }
 
-        // Adiciona a palavra na linha e coloca $currentWord como vazio 
+        // Insere a palavra na linha e coloca $currentWord como vazio 
         $currentLine .= $currentWord;
         $currentWord = "";
       } else {
@@ -62,13 +60,12 @@ class TextWrap implements TextWrapInterface {
       }
     }
 
-    //insere última linha caso não esteja vazia
-    if(!empty($currentLine)){
+    // Insere mais uma linha a $result se ele estiver vazio
+    // ou se a última palavra do texto não coube na última linha até então.
+    if(empty($result) || !empty($currentLine)){
       array_push($result, $currentLine);
     }
 
-    // Adiciona uma string vazia a $result caso não exista nenhuma linha no array
-    $result = empty($result) ? [""] : $result;
     return $result;
   }
 }
