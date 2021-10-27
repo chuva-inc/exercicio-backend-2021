@@ -19,45 +19,41 @@ class TextWrap implements TextWrapInterface {
   /**
    * {@inheritdoc}
    */
-  public function wrap(string $text, int $length): array {
-    // Apague o código abaixo e escreva sua própria implementação,
-    // nós colocamos esse mock para poder rodar a análise de cobertura dos
-    // testes unitários.
-    if ($length === 8) {
-      return [
-        'Se vi',
-        'mais',
-        'longe',
-        'foi por',
-        'estar de',
-        'pé sobre',
-        'ombros',
-        'de',
-        'gigantes',
-      ];
+  
+  /* declare(strict_types = 1); */
+
+    $wordIn = "Divino";
+    $wordPieces;
+
+    function wordBreak($word, $maxLength = 15){
+
+
+        global $wordPieces;
+
+        if (strlen($word) > $maxLength) {
+            echo "numero maximo excedido";
+            return;
+        }
+
+        for ($i = 0; $i < strlen($word); $i++) {
+            if($word[$i] ===  ","){echo "sem virgulas";return;}
+            if($word[$i] ===  " "){echo "sem espaço";return;}
+            if(is_numeric($word[$i])){echo "sem numeros";return;}
+            
+        }
+
+
+        $wordPieces = str_split($word, 1);
+
+        for ($i = 0; $i < count($wordPieces); $i++) {
+            echo "| ". $wordPieces[$i] . " |"."<br>";
+        }
     }
-    elseif ($length === 12) {
-      return [
-        'Se vi mais',
-        'longe foi',
-        'por estar de',
-        'pé sobre',
-        'ombros de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 10) {
-      $ret = [
-        'Se vi mais',
-        'longe foi',
-        'por estar',
-        'de pé',
-        'sobre',
-      ];
-      $ret[] = 'ombros de';
-      $ret[] = 'gigantes';
-      return $ret;
-    }
+
+    wordBreak($wordIn);
+  
+    
+    
 
     return [""];
   }
