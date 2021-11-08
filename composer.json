@@ -90,7 +90,7 @@
         "phpspec/prophecy-phpunit": "^2"
     },
     "scripts": {
-        "teste": " vendor/bin/phpunit -c . web/modules/textwrap/tests/src/Unit/TextWrapTest.php",
-        "teste-com-cobertura": " vendor/bin/phpunit --coverage-html textwrap-coverage-html -c . web/modules/textwrap/tests/src/Unit/TextWrapTest.php"
+        "teste": " E:/Desktop/Hacking_and_Programing_outside/Projetos/DESAFIO_TRAMPO_2/vendor/bin/phpunit -c . web/modules/textwrap/tests/src/Unit/TextWrapTest.php",
+        "teste-com-cobertura": " E:/Desktop/Hacking_and_Programing_outside/Projetos/DESAFIO_TRAMPO_2/vendor/bin/phpunit --coverage-html textwrap-coverage-html -c . web/modules/textwrap/tests/src/Unit/TextWrapTest.php"
     }
 }

@@ -18,6 +18,11 @@ class TextWrapTest extends TestCase {
   public function setUp(): void  {
     $this->resolucao = new TextWrap();
     $this->baseString = "Se vi mais longe foi por estar de pé sobre ombros de gigantes";
+    $this->advancedString = "Convolução";
+    $this->advancedString2 = "Se vi mais estável ia ali"; 
+    $this->advancedString3 = "Se estável mais ia ali";
+
+    
   }
 
   /**
@@ -59,5 +64,54 @@ class TextWrapTest extends TestCase {
     $this->assertEquals("gigantes", $ret[5]);
     $this->assertCount(6, $ret);
   }
+  /**
+   * Testa a quebra de linha para palavras que excedem o length.
+   */
+  public function testForSmallLength(){
+    $ret = $this->resolucao->wrap($this->advancedString, 1);
+    $this->assertEquals("C", $ret[0]);
+    $this->assertEquals("o", $ret[1]);
+    $this->assertEquals("n", $ret[2]);
+    $this->assertEquals("v", $ret[3]);
+    $this->assertEquals("o", $ret[4]);
+    $this->assertEquals("l", $ret[5]);
+    $this->assertEquals("u", $ret[6]);
+    $this->assertEquals("ç", $ret[7]);
+    $this->assertEquals("ã", $ret[8]);
+    $this->assertEquals("o", $ret[9]);
+    $this->assertCount(10, $ret);
+  }
+  /**
+   * Testa caso o length seja muito grande
+   */
 
+  public function testForLongLength() {
+    $ret = $this->resolucao->wrap($this->baseString, 200);
+    $this->assertEquals("Se vi mais longe foi por estar de pé sobre ombros de gigantes", $ret[0]);
+    $this->assertCount(1, $ret);
+  }
+
+  #Testa se após a quebra de uma palavra é possível encaixar outra dentro dos limites da linha
+  public function testForLineLimit(){
+    $ret = $this->resolucao->wrap($this->advancedString2, 5);
+    $this->assertEquals("Se vi", $ret[0]);
+    $this->assertEquals("mais", $ret[1]);
+    $this->assertEquals("estáv", $ret[2]);
+    $this->assertEquals("el ia", $ret[3]);
+    $this->assertEquals("ali", $ret[4]);
+    $this->assertCount(5, $ret);
+  }
+
+  #Testa se o programa evitar quebrar palavras ao meio, jogando sempre para a próxima linha.
+  public function testForAvoidLineBreak(){
+    $ret = $this->resolucao->wrap($this->advancedString3, 5);
+    $this->assertEquals("Se", $ret[0]);
+    $this->assertEquals("estáv", $ret[1]);
+    $this->assertEquals("el", $ret[2]);
+    $this->assertEquals("mais", $ret[3]);
+    $this->assertEquals("ia", $ret[4]);
+    $this->assertEquals("ali", $ret[5]);
+    $this->assertCount(6, $ret);
+  }
+  
 }
