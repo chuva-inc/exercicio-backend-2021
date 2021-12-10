@@ -1,5 +1,4 @@
 <?php
-
 namespace Drupal\textwrap;
 
 /**
@@ -14,52 +13,27 @@ namespace Drupal\textwrap;
  *
  * Boa sorte :D
  */
-class TextWrap implements TextWrapInterface {
+class TextWrap implements TextWrapInterface
+{
 
   /**
    * {@inheritdoc}
    */
-  public function wrap(string $text, int $length): array {
+  public function wrap(string $text, int $length): array
+  {
     // Apague o código abaixo e escreva sua própria implementação,
     // nós colocamos esse mock para poder rodar a análise de cobertura dos
     // testes unitários.
-    if ($length === 8) {
-      return [
-        'Se vi',
-        'mais',
-        'longe',
-        'foi por',
-        'estar de',
-        'pé sobre',
-        'ombros',
-        'de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 12) {
-      return [
-        'Se vi mais',
-        'longe foi',
-        'por estar de',
-        'pé sobre',
-        'ombros de',
-        'gigantes',
-      ];
-    }
-    elseif ($length === 10) {
-      $ret = [
-        'Se vi mais',
-        'longe foi',
-        'por estar',
-        'de pé',
-        'sobre',
-      ];
-      $ret[] = 'ombros de';
-      $ret[] = 'gigantes';
-      return $ret;
-    }
+    $res[] = NULL;
+    $arrayAux[] = NULL;
 
-    return [""];
+    // Declarando as classes das funções
+    $extrair = new WordExtractor();
+    $organizar = new ArrayOrganizer();
+    // Chama-se a função criada para extrair as palavras, chamada de wordExtractor.
+    $arrayAux = $extrair->wordExtractor($text);
+    //$arrayAux[count($arrayAux)] = "end";
+    $res = $organizar->arrayOrganizer($arrayAux, $length);
+    return $res;
   }
-
 }
